@@ -1,0 +1,257 @@
+alien90.png
+size: 2025, 900
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ship
+  rotate: false
+  xy: 0, 0
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 0
+ship
+  rotate: false
+  xy: 225, 0
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 1
+ship
+  rotate: false
+  xy: 450, 0
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 2
+ship
+  rotate: false
+  xy: 675, 0
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 3
+ship
+  rotate: false
+  xy: 900, 0
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 4
+ship
+  rotate: false
+  xy: 1125, 0
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 5
+ship
+  rotate: false
+  xy: 1350, 0
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 6
+ship
+  rotate: false
+  xy: 1575, 0
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 7
+ship
+  rotate: false
+  xy: 1800, 0
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 8
+ship
+  rotate: false
+  xy: 0, 225
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 9
+ship
+  rotate: false
+  xy: 225, 225
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 10
+ship
+  rotate: false
+  xy: 450, 225
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 11
+ship
+  rotate: false
+  xy: 675, 225
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 12
+ship
+  rotate: false
+  xy: 900, 225
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 13
+ship
+  rotate: false
+  xy: 1125, 225
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 14
+ship
+  rotate: false
+  xy: 1350, 225
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 15
+ship
+  rotate: false
+  xy: 1575, 225
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 16
+ship
+  rotate: false
+  xy: 1800, 225
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 17
+ship
+  rotate: false
+  xy: 0, 450
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 18
+ship
+  rotate: false
+  xy: 225, 450
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 19
+ship
+  rotate: false
+  xy: 450, 450
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 20
+ship
+  rotate: false
+  xy: 675, 450
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 21
+ship
+  rotate: false
+  xy: 900, 450
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 22
+ship
+  rotate: false
+  xy: 1125, 450
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 23
+ship
+  rotate: false
+  xy: 1350, 450
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 24
+ship
+  rotate: false
+  xy: 1575, 450
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 25
+ship
+  rotate: false
+  xy: 1800, 450
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 26
+ship
+  rotate: false
+  xy: 0, 675
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 27
+ship
+  rotate: false
+  xy: 225, 675
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 28
+ship
+  rotate: false
+  xy: 450, 675
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 29
+ship
+  rotate: false
+  xy: 675, 675
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 30
+ship
+  rotate: false
+  xy: 900, 675
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 31
+ship
+  rotate: false
+  xy: 1125, 675
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 32
+ship
+  rotate: false
+  xy: 1350, 675
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 33
+ship
+  rotate: false
+  xy: 1575, 675
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 34
+ship
+  rotate: false
+  xy: 1800, 675
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: 35
