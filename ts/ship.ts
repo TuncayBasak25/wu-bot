@@ -313,16 +313,21 @@ export class Ship {
         while (!this.shieldFull() && !this.healthFull()) await sleep(1000);
     }
 
-    async attackMission(enemyCount = 1, repairDistance = 0, kiteSpeed = 0) {
+    async attackMission(enemyCount = 1, repairDistance = 0, maxIddleSecond: number = 300) {
         await this.hideHud();
         this.tankConfig();
 
         let attack = false;
         let getFar = false;
+        let noTargetStart = Date.now();
         while (enemyCount > 0) {
             const { target, aliens } = getQueries();
 
+
             if (!target) {
+                if (Date.now() - noTargetStart > maxIddleSecond * 1000) {
+                    break;
+                }
                 if (attack) {
                     enemyCount--;
                     attack = false;
@@ -342,15 +347,11 @@ export class Ship {
                     await sleep(1000);
                 }
             }
-            else if (!attack) {
-                keyTap("control");
-                attack = true;
-            }
-            else if (kiteSpeed > 0) {              
-                await this.travel(kiteSpeed, kiteSpeed);
-                if (this.pos.x >= this.minimap.max.x-5 || this.pos.y >= this.minimap.max.y-5 || this.pos.x <= 5 || this.pos.y <= 5) {
-                    kiteSpeed *= -1;
-                    await this.travel(5*kiteSpeed, 5*kiteSpeed);
+            else {
+                noTargetStart = Date.now();
+                if (!attack) {
+                    keyTap("control");
+                    attack = true;
                 }
             }
 

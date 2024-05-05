@@ -330,15 +330,19 @@ class Ship {
                 yield (0, sleep_1.sleep)(1000);
         });
     }
-    attackMission(enemyCount = 1, repairDistance = 0, kiteSpeed = 0) {
+    attackMission(enemyCount = 1, repairDistance = 0, maxIddleSecond = 300) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.hideHud();
             this.tankConfig();
             let attack = false;
             let getFar = false;
+            let noTargetStart = Date.now();
             while (enemyCount > 0) {
                 const { target, aliens } = (0, query_1.getQueries)();
                 if (!target) {
+                    if (Date.now() - noTargetStart > maxIddleSecond * 1000) {
+                        break;
+                    }
                     if (attack) {
                         enemyCount--;
                         attack = false;
@@ -355,15 +359,11 @@ class Ship {
                         yield (0, sleep_1.sleep)(1000);
                     }
                 }
-                else if (!attack) {
-                    (0, robotjs_1.keyTap)("control");
-                    attack = true;
-                }
-                else if (kiteSpeed > 0) {
-                    yield this.travel(kiteSpeed, kiteSpeed);
-                    if (this.pos.x >= this.minimap.max.x - 5 || this.pos.y >= this.minimap.max.y - 5 || this.pos.x <= 5 || this.pos.y <= 5) {
-                        kiteSpeed *= -1;
-                        yield this.travel(5 * kiteSpeed, 5 * kiteSpeed);
+                else {
+                    noTargetStart = Date.now();
+                    if (!attack) {
+                        (0, robotjs_1.keyTap)("control");
+                        attack = true;
                     }
                 }
                 yield (0, sleep_1.sleep)(0);

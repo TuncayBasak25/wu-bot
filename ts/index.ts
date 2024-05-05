@@ -18,27 +18,27 @@ async function main() {
     ship.map = "u7";
     await ship.goto(12, 12);
 
-    // await ship.alpha();
+     await ship.alpha();
 
-    // moveMouse(950, 1000);
-    // mouseClick();
-    // await sleep(1000);
-    // moveMouse(460, 560);
-    // mouseClick();
-    // await sleep(1000);
-    // moveMouse(1000, 800);
-    // mouseClick();
-    // await sleep(1000);
-    // keyTap("escape");
-    // await sleep(1000);
-    // keyTap("escape");
-    // await sleep(1000);
+    moveMouse(950, 1000);
+    mouseClick();
+    await sleep(1000);
+     moveMouse(460, 560);
+    mouseClick();
+    await sleep(1000);
+    moveMouse(1000, 800);
+    mouseClick();
+    await sleep(1000);
+    keyTap("escape");
+    await sleep(1000);
+    keyTap("escape");
+    await sleep(1000);
 
-    // await ship.alpha();
+    await ship.alpha();
     
-    // await ship.kratos();
+    await ship.kratos();
 
-    //await ship.beta();
+    await ship.beta();
     
     //await ship.gamma();
 
