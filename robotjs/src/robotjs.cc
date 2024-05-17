@@ -838,14 +838,23 @@ typedef struct Point {
 } Point;
 
 typedef struct Query {
-	int color_count;
-	int colors[128];
+	int color;
+	int repetition;
 	int limit;
 	int match_count;
 	Point matches[128];
 } Query;
 
-NAN_METHOD(screenScan)
+typedef struct Measure {
+	int color;
+	Point start;
+	Point end;
+	int percentage;
+} Measure;
+
+
+
+NAN_METHOD(pixelScan)
 {
 	int info_index = 0;
 	int left = Nan::To<int32_t>(info[info_index++]).FromJust();
@@ -853,43 +862,45 @@ NAN_METHOD(screenScan)
 	int right = Nan::To<int32_t>(info[info_index++]).FromJust();
 	int bot = Nan::To<int32_t>(info[info_index++]).FromJust();
 
-	Query queries[128];
-	int query_count = 0;
+	#define MAX_QUERY 128
+	Query queries[MAX_QUERY];
+	int query_count = Nan::To<int32_t>(info[info_index++]).FromJust();
 
-	while (info.Length() > info_index)
-	{
-		if (query_count == 128) {
-			return Nan::ThrowError("Maximum query!");
-		}
+	for (int i=0; i<query_count; i++) {
+		Query *query = &queries[i];
 
-		Query *query = &queries[query_count++];
-		
-
-		query->color_count = Nan::To<int32_t>(info[info_index++]).FromJust();
-
-		if (query->color_count < 1) {
-			return Nan::ThrowError("Color sequence has to have at least length of 1");
-		}
-		else if (query->color_count > 128) {
-			return Nan::ThrowError("Max color sequence!");
-		}
-
+		query->color = Nan::To<int32_t>(info[info_index++]).FromJust() | 0xFF000000;
+		query->repetition = Nan::To<int32_t>(info[info_index++]).FromJust();
 		query->limit = Nan::To<int32_t>(info[info_index++]).FromJust();
+
+		if (query->limit > MAX_QUERY || query->limit < 1) {
+			query->limit = MAX_QUERY;
+		}
+
 		query->match_count = 0;
+	}
 
-		if (query->limit > 128 || query->limit < 1) query->limit = 128;
+	Measure measures[16];
+	int measure_count = Nan::To<int32_t>(info[info_index++]).FromJust();
 
-		if (info.Length() - info_index < query->color_count) {
-			return Nan::ThrowError("Color sequence dont match provided!");
-		}
+	
+	for (int i = 0; i < measure_count; i++)
+	{
+		Measure *measure = &measures[i];
 
-		for (int i=0; i<query->color_count; i++) {
-			query->colors[i] = Nan::To<int32_t>(info[info_index++]).FromJust() | 0xFF000000;
-		}
+		measure->color = Nan::To<int32_t>(info[info_index++]).FromJust() | 0xFF000000;
+
+		measure->start.x = Nan::To<int32_t>(info[info_index++]).FromJust();
+		measure->start.y = Nan::To<int32_t>(info[info_index++]).FromJust();
+
+		measure->end.x = Nan::To<int32_t>(info[info_index++]).FromJust();
+		measure->end.y = Nan::To<int32_t>(info[info_index++]).FromJust();
+		
+		measure->percentage = 0;
 	}
 
 	MMBitmapRef bitmap = copyMMBitmapFromDisplayInRect(MMRectMake(left, top, right, bot));
-	int *screen_colors = (int *)(void *)bitmap->imageBuffer;
+	int *pixels = (int *)(void *)bitmap->imageBuffer;
 
 	int width = right - left;
 	int height = bot - top;
@@ -898,34 +909,55 @@ NAN_METHOD(screenScan)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			int screen_color = *screen_colors++;
+			int pixel = *pixels;
 
 			for (int i = 0; i < query_count; i++)
 			{
 				Query *query = &queries[i];
 
-				if (query->match_count < query->limit && query->color_count <= width - x) {
-					bool match = true;
-					
-					for (int i = 0; i < query->color_count; i++)
+				if (query->match_count < query->limit) {
+					if (query->color == pixel && query->repetition <= width - x)
 					{
-						if (query->colors[i] != *(screen_colors + i)) {
-							match = false;
-							break;
+						int i=0;
+						while (query->color == *(pixels + ++i));
+						
+						if (query->repetition <= i) {
+							query->matches[query->match_count++] = {x, y};
 						}
+						
+						pixels += i;
+						x += i;
+						break;
 					}
+				}
+			}
 
-					if (match) {
-						query->matches[query->match_count++] = { x, y };
-					}
+			pixels++;
+		}
+	}
+
+	pixels = (int *)(void *)bitmap->imageBuffer;
+
+	for (int i = 0; i < measure_count; i++)
+	{
+		Measure *measure = &measures[i];
+
+		for (int x = measure->end.x; !measure->percentage && x >= measure->start.x; x--)
+		{
+			for (int y = measure->end.y; !measure->percentage && y >= measure->start.y; y--)
+			{
+				if (measure->color == *(pixels + y * width + x)) {
+					measure->percentage = (int)((float)(x - measure->start.x) / (float)(measure->end.x - measure->start.x)*100.0);
 				}
 			}
 		}
 	}
 
 	destroyMMBitmap(bitmap);
-	
+
 	Local<Array> results = Nan::New<Array>();
+
+	Local<Array> query_results = Nan::New<Array>();
 
 	for (int i=0; i<query_count; i++)
 	{
@@ -943,16 +975,21 @@ NAN_METHOD(screenScan)
 			Nan::Set(query_result, i, point);
 		}
 
-		Nan::Set(results, i, query_result);
+		Nan::Set(query_results, i, query_result);
 	}
-	
+
+	Nan::Set(results, 0, query_results);
+
+	Local<Array> measure_results = Nan::New<Array>();
+
+	for (int i=0; i<measure_count; i++)
+	{
+		Nan::Set(measure_results, i, Nan::New<Number>(measures[i].percentage));
+	}
+
+	Nan::Set(results, 1, measure_results);
 
 	info.GetReturnValue().Set(results);
-}
-
-NAN_METHOD(test)
-{
-
 }
 
 
@@ -1166,13 +1203,10 @@ NAN_MODULE_INIT(InitAll)
 	Nan::Set(target, Nan::New("scanColors").ToLocalChecked(),
 		Nan::GetFunction(Nan::New<FunctionTemplate>(scanColors)).ToLocalChecked());
 
-	Nan::Set(target, Nan::New("screenScan").ToLocalChecked(),
-		Nan::GetFunction(Nan::New<FunctionTemplate>(screenScan)).ToLocalChecked());
+	Nan::Set(target, Nan::New("pixelScan").ToLocalChecked(),
+		Nan::GetFunction(Nan::New<FunctionTemplate>(pixelScan)).ToLocalChecked());
 
-	Nan::Set(target, Nan::New("test").ToLocalChecked(),
-		Nan::GetFunction(Nan::New<FunctionTemplate>(test)).ToLocalChecked());
-
-	Nan::Set(target, Nan::New("getScreenSize").ToLocalChecked(),
+	Nan::Set(target, Nan::New("getScreenSize").ToLocalChecked(	),
 		Nan::GetFunction(Nan::New<FunctionTemplate>(getScreenSize)).ToLocalChecked());
 
 	Nan::Set(target, Nan::New("captureScreen").ToLocalChecked(),

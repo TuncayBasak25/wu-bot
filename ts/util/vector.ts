@@ -3,7 +3,7 @@ export type Point = {
     y: number
 }
 
-export default class Vector {
+export default class Vector implements Point {
     protected $x: number;
     protected $y: number;
 
@@ -53,18 +53,9 @@ export default class Vector {
         return this;
     }
 
-    public clone(): Vector {
+    public get clone(): Vector {
         return new Vector(this.x, this.y);
     }
-
-
-
-    /**
-     * Use this to convert { x: number, y: number } or (number, number) to [x: number, y: number].
-     * @param {Point} { x, y }
-     * @param numberOrUndefined 
-     * @returns [x: number, y: number]
-     */
 
 
     public static numberOrVector(numberOrVector: number | Point, numberOrUndefined?: number): [number, number] {
@@ -76,6 +67,29 @@ export default class Vector {
         }
         throw new Error('Expected Vector or ({ x, y }) or (number, number) expected!');
     }
+
+    public static consumeNumberOrVectorArray(args: (number | Vector)[]): [number, number] {
+        const a = args.shift();
+
+        if (!a) {
+            throw new Error("Unvalid number of arguments!");
+        }
+
+        if (a instanceof Vector) return [a.x, a.y];
+
+        const b = args.shift();
+
+        if (!b) {
+            throw new Error("Unvalid number of arguments!");
+        }
+
+        if (typeof b !== "number") {
+            throw new Error(`Unvalid arguments for vector member provided ${typeof a}`);
+        }
+
+        return [a, b];
+    }
+
 
 
     //Methods that returns a scalar or boolean value
@@ -102,6 +116,16 @@ export default class Vector {
     public pointDirection(a: number | Point, b?: number): number {
         const [x, y]: [x: number, y: number] = Vector.numberOrVector(a, b);
         return Math.atan2(y - this.y, x - this.x);
+    }
+
+    public nearestPoint(...pointList: Vector[]) {
+        if (pointList.length < 1) throw new Error("Nearest point at least one vector");
+        return pointList.sort((a, b) => this.pointDistance(a) - this.pointDistance(b))[0];
+    }
+
+    public farthestPoint(...pointList: Vector[]) {
+        if (pointList.length < 1) throw new Error("Nearest point at least one vector");
+        return pointList.sort((a, b) => this.pointDistance(b) - this.pointDistance(a))[0];
     }
 
     public floor(): this {
@@ -218,6 +242,7 @@ export default class Vector {
 
 
 
+
     //Basic math operations
 
     public addX(val: number): this {
@@ -321,13 +346,25 @@ export default class Vector {
         return this;
     }
 
-    public mulXY({ x, y }: Point): this {
+    public mulXY(x: number, y: number): this {
         this.mulX(x).mulY(y);
         return this;
     }
 
-    public divXY({ x, y }: Point): this {
+    public divXY(x: number, y: number): this {
         this.divX(x).divY(y);
         return this;
+    }
+
+
+    //Vector specific operations
+
+    public insideBox(minX: number, minY: number, maxX: number, maxY: number): boolean;
+    public insideBox(min: Vector, max: Vector): boolean;
+    public insideBox(...args: (number | Vector)[]): boolean {
+        const [minX, minY] = Vector.consumeNumberOrVectorArray(args);
+        const [maxX, maxY] = Vector.consumeNumberOrVectorArray(args);
+
+        return this.x >= minX && this.x <= maxX && this.y >= minY && this.y <= maxY;
     }
 }

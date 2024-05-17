@@ -1,50 +1,78 @@
-import robot, { getMousePos, getPixelColor, findColor as getPx, keyTap, mouseClick, getMousePos as mousePos, moveMouse, scanColors, screenScan } from "../robotjs";
-import { Navigation } from "./navigation";
-import { getQueries } from "./query";
-import { Ship } from "./ship";
-import { sleep } from "./sleep";
+import robot, { getMousePos, getPixelColor, findColor as getPx, keyTap, mouseClick, getMousePos as mousePos, moveMouse } from "../robotjs";
+import { Alien, AlienHex, Promotion } from "./alien";
+import { hud } from "./param/hud";
+import { mouse } from "./util/mouse";
+import { ship } from "./ship";
+import { sleep, until, when } from "./util/sleep";
+import Vector from "./util/vector";
+import { nav } from "./nav";
+import { startScan } from "./scan";
+import { switchConfig } from "./param/config";
+import { alpha } from "./mission/alpha";
+import { attackKite } from "./action/kite";
+import { attack } from "./action/attack";
+import { beta } from "./mission/beta";
+import { gamma } from "./mission/gamma";
+import { kratos } from "./mission/kratos";
+import { buyX2, prepareAlpha, prepareBeta } from "./menu/starmission";
+import { assureNextStage, killJumpUntil } from "./mission/stage";
 
 
 
-
-async function main() {
-        
-    //showMouse();
-    //await sleep(3000000);
+async function main()
+{
+    //await showMouse()
+    //await buyX2(2);
     
+    startScan();
+    preventTWPopup();
 
+    //kite();    
+
+    // await nav.calibrate(nav.topRight.add(-30, 30));
+    await nav.calibrate(nav.u7Base);
+     //await nav.calibrate(nav.center);
+
+    // nav.mapSpeedConstant = 155;
+    // await attackKite("magmius", 5); await nav.nextStage();
+
+   
+
+
+    await gamma();
+    await alpha();
+    await prepareAlpha();
+    await alpha();
+    await beta();
+    await prepareBeta();
+    await beta();
+    await kratos();
     
-    const ship = new Ship();
-    ship.map = "u7";
-    await ship.goto(12, 12);
-
-     await ship.alpha();
-
-    moveMouse(950, 1000);
-    mouseClick();
-    await sleep(1000);
-     moveMouse(460, 560);
-    mouseClick();
-    await sleep(1000);
-    moveMouse(1000, 800);
-    mouseClick();
-    await sleep(1000);
-    keyTap("escape");
-    await sleep(1000);
-    keyTap("escape");
-    await sleep(1000);
-
-    await ship.alpha();
-    
-    await ship.kratos();
-
-    await ship.beta();
-    
-    //await ship.gamma();
 
 
 }
 main();
+
+
+async function preventTWPopup() {
+    await sleep(1000);
+
+    while (true) {
+        await sleep(1000);
+        if (ship.tw) {
+            await sleep(1000);
+
+            if (ship.tw) {
+                mouse.click(1120, 580);
+            }
+        }
+        //if (ship.tw) mouse.click(1500, 240)
+    }
+}
+
+
+//10.000 x delta for click total norme
+
 
 
 
@@ -63,4 +91,21 @@ async function showMouse() {
 
         await sleep(500);
     }
+
+    let x = 960;
+    let y = 445;
+
+    while (getPixelColor(x, y) === "1b9dda") x--;
+    x++;
+    while (getPixelColor(x, y) === "1b9dda") y--;
+    y++;
+
+    console.log(`Start: (${x}, ${y})`);
+
+    while (getPixelColor(x, y) === "1b9dda") x++;
+    x--;
+    while (getPixelColor(x, y) === "1b9dda") y++;
+    y--;
+
+    console.log(`End: (${x}, ${y})`);
 }

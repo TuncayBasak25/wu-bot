@@ -35,15 +35,9 @@ class Vector {
         this.setY(y);
         return this;
     }
-    clone() {
+    get clone() {
         return new Vector(this.x, this.y);
     }
-    /**
-     * Use this to convert { x: number, y: number } or (number, number) to [x: number, y: number].
-     * @param {Point} { x, y }
-     * @param numberOrUndefined
-     * @returns [x: number, y: number]
-     */
     static numberOrVector(numberOrVector, numberOrUndefined) {
         if (typeof numberOrVector === 'number' && typeof numberOrUndefined === 'number') {
             return [numberOrVector, numberOrUndefined];
@@ -52,6 +46,22 @@ class Vector {
             return [numberOrVector.x, numberOrVector.y];
         }
         throw new Error('Expected Vector or ({ x, y }) or (number, number) expected!');
+    }
+    static consumeNumberOrVectorArray(args) {
+        const a = args.shift();
+        if (!a) {
+            throw new Error("Unvalid number of arguments!");
+        }
+        if (a instanceof Vector)
+            return [a.x, a.y];
+        const b = args.shift();
+        if (!b) {
+            throw new Error("Unvalid number of arguments!");
+        }
+        if (typeof b !== "number") {
+            throw new Error(`Unvalid arguments for vector member provided ${typeof a}`);
+        }
+        return [a, b];
     }
     isEqual(a, b) {
         const [x, y] = Vector.numberOrVector(a, b);
@@ -232,13 +242,18 @@ class Vector {
         }
         return this;
     }
-    mulXY({ x, y }) {
+    mulXY(x, y) {
         this.mulX(x).mulY(y);
         return this;
     }
-    divXY({ x, y }) {
+    divXY(x, y) {
         this.divX(x).divY(y);
         return this;
+    }
+    insideBox(...args) {
+        const [minX, minY] = Vector.consumeNumberOrVectorArray(args);
+        const [maxX, maxY] = Vector.consumeNumberOrVectorArray(args);
+        return this.x >= minX && this.x <= maxX && this.y >= minY && this.y <= maxY;
     }
 }
 exports.default = Vector;

@@ -10,36 +10,55 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const robotjs_1 = require("../robotjs");
+const mouse_1 = require("./util/mouse");
 const ship_1 = require("./ship");
-const sleep_1 = require("./sleep");
+const sleep_1 = require("./util/sleep");
+const nav_1 = require("./nav");
+const scan_1 = require("./scan");
+const alpha_1 = require("./mission/alpha");
+const beta_1 = require("./mission/beta");
+const gamma_1 = require("./mission/gamma");
+const kratos_1 = require("./mission/kratos");
+const starmission_1 = require("./menu/starmission");
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        //showMouse();
-        //await sleep(3000000);
-        const ship = new ship_1.Ship();
-        ship.map = "u7";
-        yield ship.goto(12, 12);
-        yield ship.alpha();
-        (0, robotjs_1.moveMouse)(950, 1000);
-        (0, robotjs_1.mouseClick)();
-        yield (0, sleep_1.sleep)(1000);
-        (0, robotjs_1.moveMouse)(460, 560);
-        (0, robotjs_1.mouseClick)();
-        yield (0, sleep_1.sleep)(1000);
-        (0, robotjs_1.moveMouse)(1000, 800);
-        (0, robotjs_1.mouseClick)();
-        yield (0, sleep_1.sleep)(1000);
-        (0, robotjs_1.keyTap)("escape");
-        yield (0, sleep_1.sleep)(1000);
-        (0, robotjs_1.keyTap)("escape");
-        yield (0, sleep_1.sleep)(1000);
-        yield ship.alpha();
-        yield ship.kratos();
-        yield ship.beta();
-        //await ship.gamma();
+        //await showMouse()
+        //await buyX2(2);
+        (0, scan_1.startScan)();
+        preventTWPopup();
+        //kite();    
+        // await nav.calibrate(nav.topRight.add(-30, 30));
+        yield nav_1.nav.calibrate(nav_1.nav.u7Base);
+        //await nav.calibrate(nav.center);
+        // nav.mapSpeedConstant = 155;
+        // await attackKite("magmius", 5); await nav.nextStage();
+        yield (0, gamma_1.gamma)();
+        yield (0, alpha_1.alpha)();
+        yield (0, starmission_1.prepareAlpha)();
+        yield (0, alpha_1.alpha)();
+        yield (0, beta_1.beta)();
+        yield (0, starmission_1.prepareBeta)();
+        yield (0, beta_1.beta)();
+        yield (0, kratos_1.kratos)();
     });
 }
 main();
+function preventTWPopup() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield (0, sleep_1.sleep)(1000);
+        while (true) {
+            yield (0, sleep_1.sleep)(1000);
+            if (ship_1.ship.tw) {
+                yield (0, sleep_1.sleep)(1000);
+                if (ship_1.ship.tw) {
+                    mouse_1.mouse.click(1120, 580);
+                }
+            }
+            //if (ship.tw) mouse.click(1500, 240)
+        }
+    });
+}
+//10.000 x delta for click total norme
 function showMouse() {
     return __awaiter(this, void 0, void 0, function* () {
         const last = (0, robotjs_1.getMousePos)();
@@ -52,5 +71,21 @@ function showMouse() {
             }
             yield (0, sleep_1.sleep)(500);
         }
+        let x = 960;
+        let y = 445;
+        while ((0, robotjs_1.getPixelColor)(x, y) === "1b9dda")
+            x--;
+        x++;
+        while ((0, robotjs_1.getPixelColor)(x, y) === "1b9dda")
+            y--;
+        y++;
+        console.log(`Start: (${x}, ${y})`);
+        while ((0, robotjs_1.getPixelColor)(x, y) === "1b9dda")
+            x++;
+        x--;
+        while ((0, robotjs_1.getPixelColor)(x, y) === "1b9dda")
+            y++;
+        y--;
+        console.log(`End: (${x}, ${y})`);
     });
 }
