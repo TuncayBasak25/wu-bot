@@ -24,7 +24,7 @@ export async function assureNextStage(killingWay: "attack" | "kite", jump = true
     while (await notEndOfStage(endOfGate)) {
         await when(() => !Alien.one());
 
-        killingWay === "attack" ? await attack(1) : await attackKite(Alien.one().name, 1);
+        killingWay === "attack" ? await attack(1) : await attackKite(1);
     }
 
     if (jump) {
@@ -33,7 +33,7 @@ export async function assureNextStage(killingWay: "attack" | "kite", jump = true
     
 }
 
-export async function killJumpUntil(stoppingAlien: AlienName, kiteThem = false) {
+export async function killJumpUntil(...stoppingAlienList: AlienName[]) {
     ship.x2();
     while (true) {
         while (true) {
@@ -42,7 +42,7 @@ export async function killJumpUntil(stoppingAlien: AlienName, kiteThem = false) 
             let moving = true;
             nav.calibrate(nav.portals.nextStage).then(() => moving = false);
 
-            await sleep(5000);
+            // await sleep(5000);
 
             await when(() => moving && !Alien.one());
 
@@ -50,7 +50,7 @@ export async function killJumpUntil(stoppingAlien: AlienName, kiteThem = false) 
 
 
             while (Alien.one()) {
-                if (Alien.one(stoppingAlien)) return;
+                if (Alien.all(...stoppingAlienList).length > 0) return;
                 switchConfig("tank");
                 
                 if (ship.shieldLevel < 30 && Alien.one().name !== "vortex") {
@@ -78,8 +78,8 @@ export async function killJumpUntil(stoppingAlien: AlienName, kiteThem = false) 
                     const target = Alien.all().filter(a => outsideHud(a.pos))
                         .sort((a, b) => nav.screenCenter.pointDistance(a.pos) - nav.screenCenter.pointDistance(b.pos))[0];
 
-                    if (kiteThem && (target.name === "magmius" || target.name === "zavientos")) {
-                        await attackKite(target.name, 1);
+                    if (target.name === "magmius" || target.name === "zavientos" || target.name === "xeon") {
+                        await attackKite(1);
                     }
                     else {
                         mouse.click(target.pos);

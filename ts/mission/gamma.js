@@ -13,7 +13,6 @@ exports.gamma = void 0;
 const robotjs_1 = require("../../robotjs");
 const kite_1 = require("../action/kite");
 const alien_1 = require("../alien");
-const starmission_1 = require("../menu/starmission");
 const nav_1 = require("../nav");
 const config_1 = require("../param/config");
 const hud_1 = require("../param/hud");
@@ -23,17 +22,18 @@ const sleep_1 = require("../util/sleep");
 const stage_1 = require("./stage");
 function gamma(skipWawe = 0) {
     return __awaiter(this, void 0, void 0, function* () {
-        (0, robotjs_1.keyTap)("h");
-        yield (0, starmission_1.buyX2)(2);
+        // keyTap("h");
+        // await buyX2(2);
         yield nav_1.nav.starMission("gamma");
-        yield (0, stage_1.killJumpUntil)("xeon");
-        yield (0, kite_1.attackKite)("xeon", 10);
-        yield (0, stage_1.killJumpUntil)("bangoliour");
-        (0, robotjs_1.keyTap)("v");
-        yield (0, kite_1.attackKite)("bangoliour", 20);
-        yield (0, stage_1.killJumpUntil)("zavientos");
-        yield (0, kite_1.attackKite)("zavientos", 5);
+        // await killJumpUntil("xeon");
+        // await attackKite(10);
+        // await killJumpUntil("bangoliour");
+        // keyTap("v");
+        // await attackKite(20);
+        // await killJumpUntil("zavientos");
+        // await attackKite(5);
         yield (0, stage_1.killJumpUntil)("magmius");
+        (0, config_1.switchConfig)("speed");
         yield nav_1.nav.goto(nav_1.nav.center.setY(0));
         yield (0, sleep_1.when)(() => !alien_1.Alien.one());
         yield nav_1.nav.goto(nav_1.nav.center.setX(nav_1.nav.botRight.x));
@@ -45,21 +45,14 @@ function gamma(skipWawe = 0) {
         yield nav_1.nav.goto(nav_1.nav.topRight);
         yield (0, sleep_1.when)(() => !alien_1.Alien.one());
         (0, robotjs_1.keyTap)("v");
-        yield (0, kite_1.attackKite)("magmius", 5);
+        yield (0, kite_1.attackKite)(5);
         yield (0, stage_1.killJumpUntil)("bangoliour");
         (0, robotjs_1.keyTap)("v");
-        yield (0, kite_1.attackKite)("bangoliour", 2);
-        yield (0, kite_1.attackKite)("zavientos", 2);
-        yield (0, kite_1.attackKite)("magmius", 1);
+        yield (0, kite_1.attackKite)(5);
         yield (0, stage_1.killJumpUntil)("vortex");
-        yield ultraVortexStage();
-        yield (0, stage_1.killJumpUntil)("plairon");
-        yield (0, kite_1.attackKite)("bangoliour", 1);
-        yield (0, kite_1.attackKite)("vortex", 1);
-        yield (0, kite_1.attackKite)("raider", 1);
-        yield (0, kite_1.attackKite)("magmius", 1);
-        yield (0, kite_1.attackKite)("zavientos", 1);
-        yield (0, kite_1.attackKite)("xeon", 1);
+        yield (0, kite_1.attackKite)(15);
+        yield (0, stage_1.killJumpUntil)("xeon", "bangoliour");
+        yield (0, kite_1.attackKite)(6);
         yield (0, stage_1.assureNextStage)("attack", true, true);
     });
 }
@@ -84,7 +77,7 @@ function ultraVortexStage() {
             yield (0, sleep_1.when)(() => alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos)).length === 0);
             if (Date.now() - start > 30000)
                 break;
-            while (ship_1.ship.shieldLevel > 20) {
+            while (ship_1.ship.shieldLevel > 5) {
                 if (ship_1.ship.healthLevel < 60)
                     (0, robotjs_1.keyTap)("q");
                 while (!ship_1.ship.aim) {
@@ -104,6 +97,8 @@ function ultraVortexStage() {
             (0, config_1.switchConfig)("speed");
             (0, robotjs_1.keyTap)("e");
             yield (0, sleep_1.until)(() => ship_1.ship.speed === 506);
+            yield nav_1.nav.goto(ship_1.ship.pos.farthestPoint(nav_1.nav.botLeft.add(25, -25), nav_1.nav.botRight.add(-25, -25), nav_1.nav.topLeft.add(25, 25), nav_1.nav.topRight.add(-25, 25)));
+            (0, config_1.switchConfig)("tank");
             yield nav_1.nav.goto(ship_1.ship.pos.farthestPoint(nav_1.nav.botLeft, nav_1.nav.botRight, nav_1.nav.topLeft, nav_1.nav.topRight));
         }
     });

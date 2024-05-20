@@ -12,33 +12,25 @@ import { sleep, until, when } from "../util/sleep";
 import { assureNextStage, killJumpUntil } from "./stage";
 
 
-export async function alpha() {
-    keyTap("h");
-    keyTap("w");
-    await buyX2();
+export async function alpha(skip = 0) {
+    skip || keyTap("h");
+    skip || keyTap("w");
+    skip || await buyX2();
     await nav.starMission("alpha");
 
 
-    await killJumpUntil("zavientos");
+    skip || await killJumpUntil("zavientos");
 
-    await attackKite("zavientos", 10);
-    await killJumpUntil("magmius");
+    skip || await attackKite(10);
+    skip || await killJumpUntil("magmius");
 
-    await attackKite("magmius", 5);
-    await killJumpUntil("bangoliour");
+    skip || await attackKite(5);
+    skip || await killJumpUntil("bangoliour");
 
-    await attackKite("bangoliour", 6);
-    await attackKite("magmius", 1);
-    await attackKite("zavientos", 2);
-    await killJumpUntil("plairon");
+    skip || await attackKite(9);
+    await killJumpUntil("bangoliour", "xeon");
 
-    await attackKite("bangoliour", 1);
-    await attackKite("vortex", 2);
-    await attackKite("raider", 2);
-
-    await attackKite("magmius", 1);
-    await attackKite("zavientos", 1);
-    await attackKite("xeon", 1);
+    await attackKite(8);
     await assureNextStage("attack", true, true);
 
     keyTap("x");

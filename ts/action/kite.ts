@@ -12,23 +12,15 @@ import Vector from "../util/vector";
 let xsens = true;
 let ysens = false;
 
-export async function attackKite(targetName: AlienName, enemyCount: number, returnTopLeftCount = 0) {
-    const alienName = ((nav.map === "gamma" || nav.map === "beta" && enemyCount < 3) ? "ultra::" : "") + ((nav.map === "beta" && enemyCount > 3 || nav.map === "alpha" && enemyCount < 3) ? "hyper::" : "") + targetName;
+export async function attackKite(enemyCount: number) {
     
-    if (["ultra::magmius", "ultra::zavientos", "hyper::vortex", "ultra::vortex"].includes(alienName)) ship.x4();
-    else  ship.x2();
-
-    const target = Alien[targetName];
-
     let killedCount = 0;
     while (enemyCount > 0) {
         if (ship.healthLevel < 30) {
             switchConfig("speed");
             await until(() => actualConfig() === "speed");
 
-            const coinPoint = ship.pos.farthestPoint(nav.botLeft, nav.botRight, nav.topLeft, nav.topRight);
-
-            await nav.goto(coinPoint);
+            await nav.goto(ship.pos.farthestPoint(nav.botLeft, nav.botRight, nav.topLeft, nav.topRight));
 
             switchConfig("tank");
 
@@ -48,23 +40,30 @@ export async function attackKite(targetName: AlienName, enemyCount: number, retu
             await nav.moveBy(xsens ? -5 : 5, ysens ? -2 : 2);
         }
 
-
+        let target = Alien.hydro;
         while (!ship.aim) {
             const start = Date.now();
-            while (Alien.all(targetName).map(a => a.pos).filter(a => outsideHud(a)).length === 0) {
+            while (Alien.all().map(a => a.pos).filter(a => outsideHud(a)).length === 0) {
                 if (Date.now() - start >= 30000 && killedCount > 0) return;
                 await sleep(0);
             }
-            
+            const alienInsideHud = Alien.all().filter(a => outsideHud(a.pos));
+            const fastestAliens = alienInsideHud.sort((a,b) => b.speed - a.speed).filter(a => a.speed === alienInsideHud[0].speed);
 
-            mouse.click(nav.screenCenter.nearestPoint(...Alien.all(targetName).map(a => a.pos).filter(a => outsideHud(a))));
+            target = fastestAliens[0];
+
+            mouse.click(nav.screenCenter.nearestPoint(...fastestAliens.map(a => a.pos)));
 
             await when(() => !ship.aim, 2000);
         }
+
+        const alienName = ((nav.map === "gamma" || nav.map === "beta" && enemyCount < 3) ? "ultra::" : "") + ((nav.map === "beta" && enemyCount > 3 || nav.map === "alpha" && enemyCount < 3) ? "hyper::" : "") + target.name;
+        if ((nav.map === "beta" || nav.map === "gamma") && (target.name === "magmius" || target.name=== "zavientos" || target.name=== "vortex")) ship.x4();
+        else  ship.x2();
     
         ship.attack();
 
-        if (await kite(targetName)) {
+        if (await kite(target)) {
             enemyCount--;
             killedCount++;
         }
@@ -77,12 +76,12 @@ export async function attackKite(targetName: AlienName, enemyCount: number, retu
 }
 
 
-export async function kite(targetName: AlienName) {
+export async function kite(target: Alien) {
     const kitePos = nav.screenCenter.set(545, 0).rotate(-Math.PI/6).add(nav.screenCenter);
 
     const aimOffset = new Vector(64, 64);
 
-    switch (targetName) {
+    switch (target.name) {
         case "zavientos": aimOffset.set(90, 90); break;
         case "magmius": aimOffset.set(90, 90); break;
         case "xeon": aimOffset.set(90, 90); break;
@@ -92,13 +91,11 @@ export async function kite(targetName: AlienName) {
 
     ship.aim.add(aimOffset);
 
-    const target = Alien[targetName];
-
     const assureAttack = setInterval(() => ship.attack(), 3000);
 
     while (ship.aim && ship.healthLevel > 30) {
-        if (ship.healthLevel < 60 && ship.shieldLevel > 60) keyTap("q");
-        if (ship.healthLevel < 40) keyTap("v");
+        if (ship.healthLevel < 50 && ship.shieldLevel > 60) keyTap("q");
+        if (ship.healthLevel < 80) keyTap("v");
 
         if (ship.pos.x < 3) xsens = false;
         else if (ship.pos.x > nav.botRight.x - 3) xsens = true;

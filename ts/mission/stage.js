@@ -36,7 +36,7 @@ function assureNextStage(killingWay, jump = true, endOfGate = false) {
     return __awaiter(this, void 0, void 0, function* () {
         while (yield notEndOfStage(endOfGate)) {
             yield (0, sleep_1.when)(() => !alien_1.Alien.one());
-            killingWay === "attack" ? yield (0, attack_1.attack)(1) : yield (0, kite_1.attackKite)(alien_1.Alien.one().name, 1);
+            killingWay === "attack" ? yield (0, attack_1.attack)(1) : yield (0, kite_1.attackKite)(1);
         }
         if (jump) {
             endOfGate ? yield nav_1.nav.endGate() : (0, robotjs_1.keyTap)("j");
@@ -44,7 +44,7 @@ function assureNextStage(killingWay, jump = true, endOfGate = false) {
     });
 }
 exports.assureNextStage = assureNextStage;
-function killJumpUntil(stoppingAlien, kiteThem = false) {
+function killJumpUntil(...stoppingAlienList) {
     return __awaiter(this, void 0, void 0, function* () {
         ship_1.ship.x2();
         while (true) {
@@ -53,12 +53,12 @@ function killJumpUntil(stoppingAlien, kiteThem = false) {
                     (0, config_1.switchConfig)("speed");
                 let moving = true;
                 nav_1.nav.calibrate(nav_1.nav.portals.nextStage).then(() => moving = false);
-                yield (0, sleep_1.sleep)(5000);
+                // await sleep(5000);
                 yield (0, sleep_1.when)(() => moving && !alien_1.Alien.one());
                 if (ship_1.ship.portal)
                     break;
                 while (alien_1.Alien.one()) {
-                    if (alien_1.Alien.one(stoppingAlien))
+                    if (alien_1.Alien.all(...stoppingAlienList).length > 0)
                         return;
                     (0, config_1.switchConfig)("tank");
                     if (ship_1.ship.shieldLevel < 30 && alien_1.Alien.one().name !== "vortex") {
@@ -81,8 +81,8 @@ function killJumpUntil(stoppingAlien, kiteThem = false) {
                     if (alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos)).length > 0) {
                         const target = alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos))
                             .sort((a, b) => nav_1.nav.screenCenter.pointDistance(a.pos) - nav_1.nav.screenCenter.pointDistance(b.pos))[0];
-                        if (kiteThem && (target.name === "magmius" || target.name === "zavientos")) {
-                            yield (0, kite_1.attackKite)(target.name, 1);
+                        if (target.name === "magmius" || target.name === "zavientos" || target.name === "xeon") {
+                            yield (0, kite_1.attackKite)(1);
                         }
                         else {
                             mouse_1.mouse.click(target.pos);

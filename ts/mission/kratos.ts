@@ -19,20 +19,14 @@ export async function kratos() {
     
     await killJumpUntil("bangoliour");
     
-    await attackKite("bangoliour", 16);
-    await attackKite("zavientos", 2);
+    await attackKite(18);
 
     await killJumpUntil("bangoliour");
-    
-    await attackKite("bangoliour", 20);
-    await attackKite("raider", 20);
+    await attackKite(40);
     
     await killJumpUntil("vortex");
 
-    await attackKite("vortex", 15);
-    
-    await attackKite("magmius", 1);
-    await attackKite("zavientos", 1);
+    await attackKite(17);
     
     await nav.quitStage();
 

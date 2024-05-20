@@ -14,22 +14,24 @@ import { assureNextStage, killJumpUntil } from "./stage";
 
 
 export async function gamma(skipWawe = 0) {
-    keyTap("h");
-    await buyX2(2);
+    // keyTap("h");
+    // await buyX2(2);
 
     await nav.starMission("gamma");
 
-    await killJumpUntil("xeon");
-    await attackKite("xeon", 10);
+    // await killJumpUntil("xeon");
+    // await attackKite(10);
 
-    await killJumpUntil("bangoliour");
-    keyTap("v");
-    await attackKite("bangoliour", 20);
+    // await killJumpUntil("bangoliour");
+    // keyTap("v");
+    // await attackKite(20);
 
-    await killJumpUntil("zavientos");
-    await attackKite("zavientos", 5);
+    // await killJumpUntil("zavientos");
+    // await attackKite(5);
     
     await killJumpUntil("magmius");
+
+    switchConfig("speed");
     
     await nav.goto(nav.center.setY(0));
     await when(() => !Alien.one());
@@ -48,27 +50,18 @@ export async function gamma(skipWawe = 0) {
     await when(() => !Alien.one());
 
     keyTap("v");
-    await attackKite("magmius", 5);
+    await attackKite(5);
     await killJumpUntil("bangoliour");
 
     keyTap("v");
-    await attackKite("bangoliour", 2);
-    await attackKite("zavientos", 2);
-    await attackKite("magmius", 1);
+    await attackKite(5);
 
     await killJumpUntil("vortex");
+    await attackKite(15);
 
-    await ultraVortexStage();
-    await killJumpUntil("plairon");
+    await killJumpUntil("xeon", "bangoliour");
 
-    await attackKite("bangoliour", 1);
-    await attackKite("vortex", 1);
-    await attackKite("raider", 1);
-    
-    await attackKite("magmius", 1);
-    await attackKite("zavientos", 1);
-    await attackKite("xeon", 1);
-
+    await attackKite(6);
     await assureNextStage("attack", true, true);
 }
 
@@ -96,7 +89,7 @@ async function ultraVortexStage() {
         if (Date.now() - start > 30000) break;
 
 
-        while (ship.shieldLevel > 20) {
+        while (ship.shieldLevel > 5) {
             if (ship.healthLevel < 60) keyTap("q");
             while (!ship.aim) {
                 await when(() => Alien.all().filter(a => outsideHud(a.pos)).length === 0);
@@ -121,6 +114,10 @@ async function ultraVortexStage() {
         keyTap("e");
 
         await until(() => ship.speed === 506);
+        await nav.goto(ship.pos.farthestPoint(nav.botLeft.add(25, -25), nav.botRight.add(-25, -25), nav.topLeft.add(25, 25), nav.topRight.add(-25, 25)));
+
+        switchConfig("tank");
+
         await nav.goto(ship.pos.farthestPoint(nav.botLeft, nav.botRight, nav.topLeft, nav.topRight));
     }
 }

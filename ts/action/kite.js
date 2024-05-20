@@ -24,21 +24,14 @@ const sleep_1 = require("../util/sleep");
 const vector_1 = __importDefault(require("../util/vector"));
 let xsens = true;
 let ysens = false;
-function attackKite(targetName, enemyCount, returnTopLeftCount = 0) {
+function attackKite(enemyCount) {
     return __awaiter(this, void 0, void 0, function* () {
-        const alienName = ((nav_1.nav.map === "gamma" || nav_1.nav.map === "beta" && enemyCount < 3) ? "ultra::" : "") + ((nav_1.nav.map === "beta" && enemyCount > 3 || nav_1.nav.map === "alpha" && enemyCount < 3) ? "hyper::" : "") + targetName;
-        if (["ultra::magmius", "ultra::zavientos", "hyper::vortex", "ultra::vortex"].includes(alienName))
-            ship_1.ship.x4();
-        else
-            ship_1.ship.x2();
-        const target = alien_1.Alien[targetName];
         let killedCount = 0;
         while (enemyCount > 0) {
             if (ship_1.ship.healthLevel < 30) {
                 (0, config_1.switchConfig)("speed");
                 yield (0, sleep_1.until)(() => (0, config_1.actualConfig)() === "speed");
-                const coinPoint = ship_1.ship.pos.farthestPoint(nav_1.nav.botLeft, nav_1.nav.botRight, nav_1.nav.topLeft, nav_1.nav.topRight);
-                yield nav_1.nav.goto(coinPoint);
+                yield nav_1.nav.goto(ship_1.ship.pos.farthestPoint(nav_1.nav.botLeft, nav_1.nav.botRight, nav_1.nav.topLeft, nav_1.nav.topRight));
                 (0, config_1.switchConfig)("tank");
                 yield (0, sleep_1.until)(() => enemyCount > 1 && alien_1.Alien.all().length > 1 || !!alien_1.Alien.one());
             }
@@ -54,18 +47,27 @@ function attackKite(targetName, enemyCount, returnTopLeftCount = 0) {
                 (0, config_1.switchConfig)("speed");
                 yield nav_1.nav.moveBy(xsens ? -5 : 5, ysens ? -2 : 2);
             }
+            let target = alien_1.Alien.hydro;
             while (!ship_1.ship.aim) {
                 const start = Date.now();
-                while (alien_1.Alien.all(targetName).map(a => a.pos).filter(a => (0, hud_1.outsideHud)(a)).length === 0) {
+                while (alien_1.Alien.all().map(a => a.pos).filter(a => (0, hud_1.outsideHud)(a)).length === 0) {
                     if (Date.now() - start >= 30000 && killedCount > 0)
                         return;
                     yield (0, sleep_1.sleep)(0);
                 }
-                mouse_1.mouse.click(nav_1.nav.screenCenter.nearestPoint(...alien_1.Alien.all(targetName).map(a => a.pos).filter(a => (0, hud_1.outsideHud)(a))));
+                const alienInsideHud = alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos));
+                const fastestAliens = alienInsideHud.sort((a, b) => b.speed - a.speed).filter(a => a.speed === alienInsideHud[0].speed);
+                target = fastestAliens[0];
+                mouse_1.mouse.click(nav_1.nav.screenCenter.nearestPoint(...fastestAliens.map(a => a.pos)));
                 yield (0, sleep_1.when)(() => !ship_1.ship.aim, 2000);
             }
+            const alienName = ((nav_1.nav.map === "gamma" || nav_1.nav.map === "beta" && enemyCount < 3) ? "ultra::" : "") + ((nav_1.nav.map === "beta" && enemyCount > 3 || nav_1.nav.map === "alpha" && enemyCount < 3) ? "hyper::" : "") + target.name;
+            if ((nav_1.nav.map === "beta" || nav_1.nav.map === "gamma") && (target.name === "magmius" || target.name === "zavientos" || target.name === "vortex"))
+                ship_1.ship.x4();
+            else
+                ship_1.ship.x2();
             ship_1.ship.attack();
-            if (yield kite(targetName)) {
+            if (yield kite(target)) {
                 enemyCount--;
                 killedCount++;
             }
@@ -77,11 +79,11 @@ function attackKite(targetName, enemyCount, returnTopLeftCount = 0) {
     });
 }
 exports.attackKite = attackKite;
-function kite(targetName) {
+function kite(target) {
     return __awaiter(this, void 0, void 0, function* () {
         const kitePos = nav_1.nav.screenCenter.set(545, 0).rotate(-Math.PI / 6).add(nav_1.nav.screenCenter);
         const aimOffset = new vector_1.default(64, 64);
-        switch (targetName) {
+        switch (target.name) {
             case "zavientos":
                 aimOffset.set(90, 90);
                 break;
@@ -95,12 +97,11 @@ function kite(targetName) {
         if (!ship_1.ship.aim)
             return false;
         ship_1.ship.aim.add(aimOffset);
-        const target = alien_1.Alien[targetName];
         const assureAttack = setInterval(() => ship_1.ship.attack(), 3000);
         while (ship_1.ship.aim && ship_1.ship.healthLevel > 30) {
-            if (ship_1.ship.healthLevel < 60 && ship_1.ship.shieldLevel > 60)
+            if (ship_1.ship.healthLevel < 50 && ship_1.ship.shieldLevel > 60)
                 (0, robotjs_1.keyTap)("q");
-            if (ship_1.ship.healthLevel < 40)
+            if (ship_1.ship.healthLevel < 80)
                 (0, robotjs_1.keyTap)("v");
             if (ship_1.ship.pos.x < 3)
                 xsens = false;

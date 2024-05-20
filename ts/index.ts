@@ -21,11 +21,12 @@ import { assureNextStage, killJumpUntil } from "./mission/stage";
 
 async function main()
 {
-    //await showMouse()
+    // await showMouse()
     //await buyX2(2);
     
     startScan();
     preventTWPopup();
+    quitOnDisconnect();
 
     //kite();    
 
@@ -38,15 +39,15 @@ async function main()
 
    
 
-
-    await gamma();
-    await alpha();
-    await prepareAlpha();
-    await alpha();
-    await beta();
-    await prepareBeta();
-    await beta();
-    await kratos();
+    await gamma()
+    //await kratos();
+    // await alpha();
+    // await prepareAlpha();
+    // await alpha();
+    // await beta();
+    // await prepareBeta();
+    // await beta();
+    // await gamma();
     
 
 
@@ -70,6 +71,21 @@ async function preventTWPopup() {
     }
 }
 
+async function quitOnDisconnect() {
+    await sleep(1000);
+    let counter = 0;
+
+    while (true) {
+        if (ship.healthLevel === 0) {
+            if (counter > 10) process.exit();
+
+            counter++;
+        }
+        else counter = 0;
+
+        await sleep(1000);
+    }
+}
 
 //10.000 x delta for click total norme
 

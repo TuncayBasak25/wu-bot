@@ -22,15 +22,11 @@ function kratos() {
         yield (0, stage_1.killJumpUntil)("zavientos");
         yield (0, stage_1.killJumpUntil)("hydro");
         yield (0, stage_1.killJumpUntil)("bangoliour");
-        yield (0, kite_1.attackKite)("bangoliour", 16);
-        yield (0, kite_1.attackKite)("zavientos", 2);
+        yield (0, kite_1.attackKite)(18);
         yield (0, stage_1.killJumpUntil)("bangoliour");
-        yield (0, kite_1.attackKite)("bangoliour", 20);
-        yield (0, kite_1.attackKite)("raider", 20);
+        yield (0, kite_1.attackKite)(40);
         yield (0, stage_1.killJumpUntil)("vortex");
-        yield (0, kite_1.attackKite)("vortex", 15);
-        yield (0, kite_1.attackKite)("magmius", 1);
-        yield (0, kite_1.attackKite)("zavientos", 1);
+        yield (0, kite_1.attackKite)(17);
         yield nav_1.nav.quitStage();
         (0, robotjs_1.keyTap)("x");
     });
