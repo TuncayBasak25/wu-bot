@@ -18,26 +18,24 @@ const scan_1 = require("./scan");
 const gamma_1 = require("./mission/gamma");
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        // await showMouse()
+        //await showMouse()
         //await buyX2(2);
         (0, scan_1.startScan)();
         preventTWPopup();
-        quitOnDisconnect();
         //kite();    
         // await nav.calibrate(nav.topRight.add(-30, 30));
         yield nav_1.nav.calibrate(nav_1.nav.u7Base);
         //await nav.calibrate(nav.center);
         // nav.mapSpeedConstant = 155;
         // await attackKite("magmius", 5); await nav.nextStage();
+        // await kratos();
         yield (0, gamma_1.gamma)();
-        //await kratos();
         // await alpha();
         // await prepareAlpha();
         // await alpha();
         // await beta();
         // await prepareBeta();
         // await beta();
-        // await gamma();
     });
 }
 main();
@@ -53,22 +51,6 @@ function preventTWPopup() {
                 }
             }
             //if (ship.tw) mouse.click(1500, 240)
-        }
-    });
-}
-function quitOnDisconnect() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield (0, sleep_1.sleep)(1000);
-        let counter = 0;
-        while (true) {
-            if (ship_1.ship.healthLevel === 0) {
-                if (counter > 10)
-                    process.exit();
-                counter++;
-            }
-            else
-                counter = 0;
-            yield (0, sleep_1.sleep)(1000);
         }
     });
 }

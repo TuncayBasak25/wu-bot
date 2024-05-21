@@ -81,7 +81,7 @@ function killJumpUntil(...stoppingAlienList) {
                     if (alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos)).length > 0) {
                         const target = alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos))
                             .sort((a, b) => nav_1.nav.screenCenter.pointDistance(a.pos) - nav_1.nav.screenCenter.pointDistance(b.pos))[0];
-                        if (target.name === "magmius" || target.name === "zavientos" || target.name === "xeon") {
+                        if (target.name === "magmius" || target.name === "zavientos") {
                             yield (0, kite_1.attackKite)(1);
                         }
                         else {

@@ -17,6 +17,7 @@ export async function attackKite(enemyCount: number) {
     let killedCount = 0;
     while (enemyCount > 0) {
         if (ship.healthLevel < 30) {
+            keyTap("e");
             switchConfig("speed");
             await until(() => actualConfig() === "speed");
 
@@ -27,21 +28,35 @@ export async function attackKite(enemyCount: number) {
             await until(() => enemyCount > 1 && Alien.all().length > 1 || !!Alien.one());
 
         }
-        if (ship.pos.x < nav.botRight.x * 0.2) xsens = false;
-        else if (ship.pos.x > nav.botRight.x * 0.8) xsens = true;
+        let sideSwitch = false;
 
-        if (ship.pos.y < nav.botRight.y * 0.2) ysens = false;
-        else if (ship.pos.y > nav.botRight.y * 0.8) ysens = true;
-
-
-        while (Alien.one() && !Alien.all().reduce((acc, {pos}) => acc || (xsens ? pos.x > nav.screenCenter.x : pos.x < nav.screenCenter.x) && (ysens ? pos.y > nav.screenCenter.y : pos.y < nav.screenCenter.y)  ,false)) {
-            switchConfig("speed");
-
-            await nav.moveBy(xsens ? -5 : 5, ysens ? -2 : 2);
+        if (ship.pos.x < nav.botRight.x * 0.2) {
+            xsens = false;
+            sideSwitch = true;
+        }
+        else if (ship.pos.x > nav.botRight.x * 0.8) {
+            xsens = true;
+            sideSwitch = true;
         }
 
-        let target = Alien.hydro;
-        while (!ship.aim) {
+        if (ship.pos.y < nav.botRight.y * 0.2) {
+            ysens = false;
+            sideSwitch = true;
+        }
+        else if (ship.pos.y > nav.botRight.y * 0.8) {
+            ysens = true;
+            sideSwitch = true;
+        }
+
+
+        while (sideSwitch && Alien.one() && !Alien.all().reduce((acc, {pos}) => acc || (xsens ? pos.x > nav.screenCenter.x : pos.x < nav.screenCenter.x) && (ysens ? pos.y > nav.screenCenter.y : pos.y < nav.screenCenter.y)  ,false)) {
+            switchConfig("speed");
+
+            await nav.moveBy(xsens ? -10 : 10, ysens ? -3 : 3);
+        }
+
+        let target;
+        while (!target) {
             const start = Date.now();
             while (Alien.all().map(a => a.pos).filter(a => outsideHud(a)).length === 0) {
                 if (Date.now() - start >= 30000 && killedCount > 0) return;
@@ -52,9 +67,11 @@ export async function attackKite(enemyCount: number) {
 
             target = fastestAliens[0];
 
-            mouse.click(nav.screenCenter.nearestPoint(...fastestAliens.map(a => a.pos)));
+            mouse.click((new Vector(xsens ? 0 : 1920, ysens ? 0 : 1080)).nearestPoint(...fastestAliens.map(a => a.pos)));
 
             await when(() => !ship.aim, 2000);
+
+            if (!ship.aim) target = undefined;
         }
 
         const alienName = ((nav.map === "gamma" || nav.map === "beta" && enemyCount < 3) ? "ultra::" : "") + ((nav.map === "beta" && enemyCount > 3 || nav.map === "alpha" && enemyCount < 3) ? "hyper::" : "") + target.name;
@@ -82,9 +99,9 @@ export async function kite(target: Alien) {
     const aimOffset = new Vector(64, 64);
 
     switch (target.name) {
-        case "zavientos": aimOffset.set(90, 90); break;
-        case "magmius": aimOffset.set(90, 90); break;
-        case "xeon": aimOffset.set(90, 90); break;
+        case "zavientos": aimOffset.set(95, 90); break;
+        case "magmius": aimOffset.set(95, 90); break;
+        case "xeon": aimOffset.set(95, 90); break;
     }
 
     if (!ship.aim) return false;

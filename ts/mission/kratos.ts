@@ -4,6 +4,7 @@ import { attackKite } from "../action/kite";
 import { repair } from "../action/repair";
 import { buyX2 } from "../menu/starmission";
 import { nav } from "../nav";
+import { switchConfig } from "../param/config";
 import { killJumpUntil } from "./stage";
 
 export async function kratos() {
@@ -30,5 +31,6 @@ export async function kratos() {
     
     await nav.quitStage();
 
+    switchConfig("speed");
     keyTap("x");
 }

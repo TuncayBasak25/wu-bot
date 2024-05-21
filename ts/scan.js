@@ -16,10 +16,11 @@ exports.startScan = void 0;
 const robotjs_1 = require("../robotjs");
 const alien_1 = require("./alien");
 const ship_1 = require("./ship");
+const mouse_1 = require("./util/mouse");
 const sleep_1 = require("./util/sleep");
 const vector_1 = __importDefault(require("./util/vector"));
 const queryList = [
-    0xFF0000, 25, 1, //Aim
+    0xFF0000, 25, 1,
     alien_1.AlienHex.hydro, 2, 0,
     alien_1.AlienHex.jenta, 2, 0,
     alien_1.AlienHex.mali, 2, 0,
@@ -31,8 +32,8 @@ const queryList = [
     alien_1.AlienHex.xeon, 2, 0,
     alien_1.AlienHex.zavientos, 2, 0,
     alien_1.AlienHex.magmius, 2, 0,
-    0xeedaf0, 5, 1, //Moving reactors
-    0xEFFADA, 25, 1, //Portal
+    0xeedaf0, 5, 1,
+    0xEFFADA, 25, 1,
     0xFFFFFF, 300, 1
 ];
 // const measureList = [
@@ -42,17 +43,18 @@ const queryList = [
 const healthList = [];
 const shieldList = [];
 const measureList = [
-    0x3cac19, 910, 435, 1009, 438, //Health
-    0x1b9dda, 910, 442, 1009, 445, //Shield
-    0xE1B727, 910, 435, 1009, 438, //Extra Health
+    0x3cac19, 910, 435, 1009, 438,
+    0x1b9dda, 910, 442, 1009, 445,
+    0xE1B727, 910, 435, 1009, 438,
     0x205C0D, 910, 435, 1009, 438, //Extra Background
 ];
 //1250, 410 rep red
+let disconnectTimeout;
 function startScan(cooldown = 0) {
     return __awaiter(this, void 0, void 0, function* () {
         const response = (0, robotjs_1.pixelScan)(0, 0, 1920, 1000, queryList.length / 3, ...queryList, measureList.length / 5, ...measureList);
         ship_1.ship.tw = response[0][14].length > 0;
-        if (!ship_1.ship.tw) {
+        if (!ship_1.ship.tw && (response[1][0] || response[1][1] || response[1][2] || response[1][3])) {
             ship_1.ship.aim = response[0][0][0] && new vector_1.default(response[0][0][0].x, response[0][0][0].y);
             ship_1.ship.moving = response[0][12].length > 0;
             ship_1.ship.portal = response[0][13].length > 0;
@@ -69,6 +71,16 @@ function startScan(cooldown = 0) {
             else {
                 ship_1.ship.healthLevel = 100;
             }
+            if (ship_1.ship.disconnected) {
+                ship_1.ship.disconnected = false;
+            }
+        }
+        else if (!ship_1.ship.disconnected && (0, robotjs_1.getPixelColor)(759, 884) === "775300") {
+            mouse_1.mouse.click(960, 880);
+            ship_1.ship.disconnected = true;
+            if (disconnectTimeout)
+                clearTimeout(disconnectTimeout);
+            disconnectTimeout = setTimeout(() => ship_1.ship.disconnected && process.exit(), 10000);
         }
         alien_1.Alien.list = [];
         for (let i = 0; i < alien_1.Alien.enum.length; i++) {

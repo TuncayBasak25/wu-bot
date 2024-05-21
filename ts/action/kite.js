@@ -29,26 +29,36 @@ function attackKite(enemyCount) {
         let killedCount = 0;
         while (enemyCount > 0) {
             if (ship_1.ship.healthLevel < 30) {
+                (0, robotjs_1.keyTap)("e");
                 (0, config_1.switchConfig)("speed");
                 yield (0, sleep_1.until)(() => (0, config_1.actualConfig)() === "speed");
                 yield nav_1.nav.goto(ship_1.ship.pos.farthestPoint(nav_1.nav.botLeft, nav_1.nav.botRight, nav_1.nav.topLeft, nav_1.nav.topRight));
                 (0, config_1.switchConfig)("tank");
                 yield (0, sleep_1.until)(() => enemyCount > 1 && alien_1.Alien.all().length > 1 || !!alien_1.Alien.one());
             }
-            if (ship_1.ship.pos.x < nav_1.nav.botRight.x * 0.2)
+            let sideSwitch = false;
+            if (ship_1.ship.pos.x < nav_1.nav.botRight.x * 0.2) {
                 xsens = false;
-            else if (ship_1.ship.pos.x > nav_1.nav.botRight.x * 0.8)
-                xsens = true;
-            if (ship_1.ship.pos.y < nav_1.nav.botRight.y * 0.2)
-                ysens = false;
-            else if (ship_1.ship.pos.y > nav_1.nav.botRight.y * 0.8)
-                ysens = true;
-            while (alien_1.Alien.one() && !alien_1.Alien.all().reduce((acc, { pos }) => acc || (xsens ? pos.x > nav_1.nav.screenCenter.x : pos.x < nav_1.nav.screenCenter.x) && (ysens ? pos.y > nav_1.nav.screenCenter.y : pos.y < nav_1.nav.screenCenter.y), false)) {
-                (0, config_1.switchConfig)("speed");
-                yield nav_1.nav.moveBy(xsens ? -5 : 5, ysens ? -2 : 2);
+                sideSwitch = true;
             }
-            let target = alien_1.Alien.hydro;
-            while (!ship_1.ship.aim) {
+            else if (ship_1.ship.pos.x > nav_1.nav.botRight.x * 0.8) {
+                xsens = true;
+                sideSwitch = true;
+            }
+            if (ship_1.ship.pos.y < nav_1.nav.botRight.y * 0.2) {
+                ysens = false;
+                sideSwitch = true;
+            }
+            else if (ship_1.ship.pos.y > nav_1.nav.botRight.y * 0.8) {
+                ysens = true;
+                sideSwitch = true;
+            }
+            while (sideSwitch && alien_1.Alien.one() && !alien_1.Alien.all().reduce((acc, { pos }) => acc || (xsens ? pos.x > nav_1.nav.screenCenter.x : pos.x < nav_1.nav.screenCenter.x) && (ysens ? pos.y > nav_1.nav.screenCenter.y : pos.y < nav_1.nav.screenCenter.y), false)) {
+                (0, config_1.switchConfig)("speed");
+                yield nav_1.nav.moveBy(xsens ? -10 : 10, ysens ? -3 : 3);
+            }
+            let target;
+            while (!target) {
                 const start = Date.now();
                 while (alien_1.Alien.all().map(a => a.pos).filter(a => (0, hud_1.outsideHud)(a)).length === 0) {
                     if (Date.now() - start >= 30000 && killedCount > 0)
@@ -58,8 +68,10 @@ function attackKite(enemyCount) {
                 const alienInsideHud = alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos));
                 const fastestAliens = alienInsideHud.sort((a, b) => b.speed - a.speed).filter(a => a.speed === alienInsideHud[0].speed);
                 target = fastestAliens[0];
-                mouse_1.mouse.click(nav_1.nav.screenCenter.nearestPoint(...fastestAliens.map(a => a.pos)));
+                mouse_1.mouse.click((new vector_1.default(xsens ? 0 : 1920, ysens ? 0 : 1080)).nearestPoint(...fastestAliens.map(a => a.pos)));
                 yield (0, sleep_1.when)(() => !ship_1.ship.aim, 2000);
+                if (!ship_1.ship.aim)
+                    target = undefined;
             }
             const alienName = ((nav_1.nav.map === "gamma" || nav_1.nav.map === "beta" && enemyCount < 3) ? "ultra::" : "") + ((nav_1.nav.map === "beta" && enemyCount > 3 || nav_1.nav.map === "alpha" && enemyCount < 3) ? "hyper::" : "") + target.name;
             if ((nav_1.nav.map === "beta" || nav_1.nav.map === "gamma") && (target.name === "magmius" || target.name === "zavientos" || target.name === "vortex"))
@@ -85,13 +97,13 @@ function kite(target) {
         const aimOffset = new vector_1.default(64, 64);
         switch (target.name) {
             case "zavientos":
-                aimOffset.set(90, 90);
+                aimOffset.set(95, 90);
                 break;
             case "magmius":
-                aimOffset.set(90, 90);
+                aimOffset.set(95, 90);
                 break;
             case "xeon":
-                aimOffset.set(90, 90);
+                aimOffset.set(95, 90);
                 break;
         }
         if (!ship_1.ship.aim)

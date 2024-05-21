@@ -13,7 +13,7 @@ import { assureNextStage, killJumpUntil } from "./stage";
 
 export async function beta() {
     keyTap("h");
-    await buyX2();
+    //await buyX2();
     keyTap("w");
 
     await nav.starMission("beta");

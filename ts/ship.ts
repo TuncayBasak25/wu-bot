@@ -23,6 +23,7 @@ export class Ship {
 
     portal = false;
     tw = false;
+    disconnected = false;
 
     promotion = Promotion.normal;
     aim?: Vector;

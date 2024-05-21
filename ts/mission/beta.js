@@ -12,13 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.beta = void 0;
 const robotjs_1 = require("../../robotjs");
 const kite_1 = require("../action/kite");
-const starmission_1 = require("../menu/starmission");
 const nav_1 = require("../nav");
 const stage_1 = require("./stage");
 function beta() {
     return __awaiter(this, void 0, void 0, function* () {
         (0, robotjs_1.keyTap)("h");
-        yield (0, starmission_1.buyX2)();
+        //await buyX2();
         (0, robotjs_1.keyTap)("w");
         yield nav_1.nav.starMission("beta");
         yield (0, stage_1.killJumpUntil)("xeon");

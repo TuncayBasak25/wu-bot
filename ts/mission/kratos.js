@@ -13,6 +13,7 @@ exports.kratos = void 0;
 const robotjs_1 = require("../../robotjs");
 const kite_1 = require("../action/kite");
 const nav_1 = require("../nav");
+const config_1 = require("../param/config");
 const stage_1 = require("./stage");
 function kratos() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -28,6 +29,7 @@ function kratos() {
         yield (0, stage_1.killJumpUntil)("vortex");
         yield (0, kite_1.attackKite)(17);
         yield nav_1.nav.quitStage();
+        (0, config_1.switchConfig)("speed");
         (0, robotjs_1.keyTap)("x");
     });
 }

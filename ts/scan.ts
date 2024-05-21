@@ -1,7 +1,8 @@
-import { pixelScan } from "../robotjs";
+import { getPixelColor, pixelScan } from "../robotjs";
 import { Alien, AlienHex } from "./alien";
 import { actualConfig } from "./param/config";
 import { ship } from "./ship";
+import { mouse } from "./util/mouse";
 import { sleep } from "./util/sleep";
 import Vector from "./util/vector";
 
@@ -38,14 +39,14 @@ const measureList = [
 ];
 
 //1250, 410 rep red
-
+let disconnectTimeout: NodeJS.Timeout;
 export async function startScan(cooldown: number = 0) {
     const response = pixelScan(0, 0, 1920, 1000, queryList.length / 3, ...queryList, measureList.length / 5, ...measureList);
 
     
     ship.tw = response[0][14].length > 0;
     
-    if (!ship.tw) {
+    if (!ship.tw && (response[1][0] || response[1][1] || response[1][2] || response[1][3])) {
         ship.aim = response[0][0][0] && new Vector(response[0][0][0].x, response[0][0][0].y);
 
         ship.moving = response[0][12].length > 0;
@@ -63,6 +64,19 @@ export async function startScan(cooldown: number = 0) {
         else {
             ship.healthLevel = 100;
         }
+
+        if (ship.disconnected) {
+            ship.disconnected = false;
+        }
+    }
+    else if (!ship.disconnected && getPixelColor(759, 884) === "775300") {
+        mouse.click(960, 880);
+
+        ship.disconnected = true;
+
+        if (disconnectTimeout) clearTimeout(disconnectTimeout);
+
+        disconnectTimeout = setTimeout(() => ship.disconnected && process.exit(), 10000);
     }
 
     Alien.list = [];

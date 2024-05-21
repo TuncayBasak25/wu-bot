@@ -23,6 +23,7 @@ class Ship {
         this.moving = false;
         this.portal = false;
         this.tw = false;
+        this.disconnected = false;
         this.promotion = alien_1.Promotion.normal;
         this.laserAmmo = LaserAmmo.x2;
         this.pos = new vector_1.default(0, 0);

@@ -78,7 +78,7 @@ export async function killJumpUntil(...stoppingAlienList: AlienName[]) {
                     const target = Alien.all().filter(a => outsideHud(a.pos))
                         .sort((a, b) => nav.screenCenter.pointDistance(a.pos) - nav.screenCenter.pointDistance(b.pos))[0];
 
-                    if (target.name === "magmius" || target.name === "zavientos" || target.name === "xeon") {
+                    if (target.name === "magmius" || target.name === "zavientos") {
                         await attackKite(1);
                     }
                     else {

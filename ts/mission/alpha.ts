@@ -15,7 +15,7 @@ import { assureNextStage, killJumpUntil } from "./stage";
 export async function alpha(skip = 0) {
     skip || keyTap("h");
     skip || keyTap("w");
-    skip || await buyX2();
+    //skip || await buyX2();
     await nav.starMission("alpha");
 
 

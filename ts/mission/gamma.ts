@@ -14,46 +14,32 @@ import { assureNextStage, killJumpUntil } from "./stage";
 
 
 export async function gamma(skipWawe = 0) {
-    // keyTap("h");
+    keyTap("h");
     // await buyX2(2);
 
     await nav.starMission("gamma");
 
-    // await killJumpUntil("xeon");
-    // await attackKite(10);
+    await killJumpUntil("xeon");
+    await attackKite(10);
 
-    // await killJumpUntil("bangoliour");
-    // keyTap("v");
-    // await attackKite(20);
+    await killJumpUntil("bangoliour");
+    await attackKite(20);
 
-    // await killJumpUntil("zavientos");
-    // await attackKite(5);
+    await killJumpUntil("zavientos");
+    await attackKite(5);
     
     await killJumpUntil("magmius");
-
     switchConfig("speed");
-    
     await nav.goto(nav.center.setY(0));
     await when(() => !Alien.one());
-    
     await nav.goto(nav.center.setX(nav.botRight.x));
     await when(() => !Alien.one());
-    
-    await nav.goto(nav.center.setY(0));
-    await when(() => !Alien.one());
-    
-    await nav.goto(nav.center.setX(nav.botRight.x));
-    await when(() => !Alien.one());
-
     await nav.goto(nav.topRight);
-
     await when(() => !Alien.one());
-
-    keyTap("v");
     await attackKite(5);
+
     await killJumpUntil("bangoliour");
 
-    keyTap("v");
     await attackKite(5);
 
     await killJumpUntil("vortex");
