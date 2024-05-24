@@ -16,7 +16,7 @@ export async function attackKite(enemyCount: number) {
     
     let killedCount = 0;
     while (enemyCount > 0) {
-        if (ship.healthLevel < 30) {
+        if (ship.healthLevel < 50) {
             keyTap("e");
             switchConfig("speed");
             await until(() => actualConfig() === "speed");
@@ -49,7 +49,7 @@ export async function attackKite(enemyCount: number) {
         }
 
 
-        while (sideSwitch && Alien.one() && !Alien.all().reduce((acc, {pos}) => acc || (xsens ? pos.x > nav.screenCenter.x : pos.x < nav.screenCenter.x) && (ysens ? pos.y > nav.screenCenter.y : pos.y < nav.screenCenter.y)  ,false)) {
+        while (sideSwitch && Alien.one() && !Alien.all().reduce((acc, {pos}) => acc || (xsens ? pos.x > nav.screenCenter.x*1.5 : pos.x < nav.screenCenter.x*0.5) && (ysens ? pos.y > nav.screenCenter.y*1.5 : pos.y < nav.screenCenter.y*0.5)  ,false)) {
             switchConfig("speed");
 
             await nav.moveBy(xsens ? -10 : 10, ysens ? -3 : 3);
@@ -74,9 +74,8 @@ export async function attackKite(enemyCount: number) {
             if (!ship.aim) target = undefined;
         }
 
-        const alienName = ((nav.map === "gamma" || nav.map === "beta" && enemyCount < 3) ? "ultra::" : "") + ((nav.map === "beta" && enemyCount > 3 || nav.map === "alpha" && enemyCount < 3) ? "hyper::" : "") + target.name;
-        if ((nav.map === "beta" || nav.map === "gamma") && (target.name === "magmius" || target.name=== "zavientos" || target.name=== "vortex")) ship.x4();
-        else  ship.x2();
+        if (["hydro", "jenta", "mali"].includes(target.name)) ship.x2();
+        else ship.x4();
     
         ship.attack();
 
@@ -85,7 +84,7 @@ export async function attackKite(enemyCount: number) {
             killedCount++;
         }
         else {
-            console.log(`Let mid health for ${enemyCount} ${alienName}`);
+            console.log(`Let mid health for ${enemyCount} ${target.name}`);
         }
     }
     
@@ -111,7 +110,7 @@ export async function kite(target: Alien) {
     const assureAttack = setInterval(() => ship.attack(), 3000);
 
     while (ship.aim && ship.healthLevel > 30) {
-        if (ship.healthLevel < 50 && ship.shieldLevel > 60) keyTap("q");
+        if (ship.healthLevel < 50) keyTap("q");
         if (ship.healthLevel < 80) keyTap("v");
 
         if (ship.pos.x < 3) xsens = false;

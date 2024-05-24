@@ -28,7 +28,7 @@ function attackKite(enemyCount) {
     return __awaiter(this, void 0, void 0, function* () {
         let killedCount = 0;
         while (enemyCount > 0) {
-            if (ship_1.ship.healthLevel < 30) {
+            if (ship_1.ship.healthLevel < 50) {
                 (0, robotjs_1.keyTap)("e");
                 (0, config_1.switchConfig)("speed");
                 yield (0, sleep_1.until)(() => (0, config_1.actualConfig)() === "speed");
@@ -53,7 +53,7 @@ function attackKite(enemyCount) {
                 ysens = true;
                 sideSwitch = true;
             }
-            while (sideSwitch && alien_1.Alien.one() && !alien_1.Alien.all().reduce((acc, { pos }) => acc || (xsens ? pos.x > nav_1.nav.screenCenter.x : pos.x < nav_1.nav.screenCenter.x) && (ysens ? pos.y > nav_1.nav.screenCenter.y : pos.y < nav_1.nav.screenCenter.y), false)) {
+            while (sideSwitch && alien_1.Alien.one() && !alien_1.Alien.all().reduce((acc, { pos }) => acc || (xsens ? pos.x > nav_1.nav.screenCenter.x * 1.5 : pos.x < nav_1.nav.screenCenter.x * 0.5) && (ysens ? pos.y > nav_1.nav.screenCenter.y * 1.5 : pos.y < nav_1.nav.screenCenter.y * 0.5), false)) {
                 (0, config_1.switchConfig)("speed");
                 yield nav_1.nav.moveBy(xsens ? -10 : 10, ysens ? -3 : 3);
             }
@@ -73,18 +73,17 @@ function attackKite(enemyCount) {
                 if (!ship_1.ship.aim)
                     target = undefined;
             }
-            const alienName = ((nav_1.nav.map === "gamma" || nav_1.nav.map === "beta" && enemyCount < 3) ? "ultra::" : "") + ((nav_1.nav.map === "beta" && enemyCount > 3 || nav_1.nav.map === "alpha" && enemyCount < 3) ? "hyper::" : "") + target.name;
-            if ((nav_1.nav.map === "beta" || nav_1.nav.map === "gamma") && (target.name === "magmius" || target.name === "zavientos" || target.name === "vortex"))
-                ship_1.ship.x4();
-            else
+            if (["hydro", "jenta", "mali"].includes(target.name))
                 ship_1.ship.x2();
+            else
+                ship_1.ship.x4();
             ship_1.ship.attack();
             if (yield kite(target)) {
                 enemyCount--;
                 killedCount++;
             }
             else {
-                console.log(`Let mid health for ${enemyCount} ${alienName}`);
+                console.log(`Let mid health for ${enemyCount} ${target.name}`);
             }
         }
         (0, config_1.switchConfig)("speed");
@@ -111,7 +110,7 @@ function kite(target) {
         ship_1.ship.aim.add(aimOffset);
         const assureAttack = setInterval(() => ship_1.ship.attack(), 3000);
         while (ship_1.ship.aim && ship_1.ship.healthLevel > 30) {
-            if (ship_1.ship.healthLevel < 50 && ship_1.ship.shieldLevel > 60)
+            if (ship_1.ship.healthLevel < 50)
                 (0, robotjs_1.keyTap)("q");
             if (ship_1.ship.healthLevel < 80)
                 (0, robotjs_1.keyTap)("v");
