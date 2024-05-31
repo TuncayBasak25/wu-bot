@@ -57,6 +57,10 @@ class Nav {
     async quitStage() {
         await this.goto(this.portals.quitStage);
 
+        this.map = "u7";
+        ship.pos.set(this.u7Base);
+        this.mapSpeedConstant = 105;
+
         keyTap("j");
         await sleep(5000);
     }

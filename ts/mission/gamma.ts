@@ -10,7 +10,7 @@ import { hud, outsideHud } from "../param/hud";
 import { ship } from "../ship";
 import { mouse } from "../util/mouse";
 import { doWhile, sleep, until, when } from "../util/sleep";
-import { assureNextStage, killJumpUntil } from "./stage";
+import { killJumpUntil } from "./stage";
 
 
 export async function gamma(skipWawe = 0) {
@@ -48,62 +48,8 @@ export async function gamma(skipWawe = 0) {
     await killJumpUntil("xeon", "bangoliour");
 
     await attackKite(6);
-    await assureNextStage("attack", true, true);
+    await killJumpUntil();
+
+    switchConfig("speed");
 }
 
-
-let keepConstantMove = false;
-const lastCoin = nav.center;
-
-async function constantMove() {
-    while (keepConstantMove) {
-        await when(() => ship.moving);
-
-        nav.calibrate(ship.pos.farthestPoint(nav.botLeft, nav.botRight, nav.topLeft, nav.topRight));
-    }
-}
-
-async function ultraVortexStage() {
-    let vortexCount = 15;
-    
-    keyTap("v");
-    while (vortexCount > 0) {
-        switchConfig("tank");
-
-        const start = Date.now();
-        await when(() => Alien.all().filter(a => outsideHud(a.pos)).length === 0);
-        if (Date.now() - start > 30000) break;
-
-
-        while (ship.shieldLevel > 5) {
-            if (ship.healthLevel < 60) keyTap("q");
-            while (!ship.aim) {
-                await when(() => Alien.all().filter(a => outsideHud(a.pos)).length === 0);
-                mouse.click(nav.screenCenter.nearestPoint(...Alien.all().map(a => a.pos).filter(a => outsideHud(a))));
-                await when(() => !ship.aim, 800);
-            }
-
-            const mrs = (vortexCount > 10) && setInterval(() => keyTap("z"), 1500);
-
-            keyTap("2");
-            await sleep(mrs ? 3000 : 5000);
-            keyTap("s");
-            keyTap("a");
-            await until(() => !ship.aim);
-
-            mrs && clearInterval(mrs);
-
-            vortexCount--;
-        }
-        switchConfig("speed");
-
-        keyTap("e");
-
-        await until(() => ship.speed === 506);
-        await nav.goto(ship.pos.farthestPoint(nav.botLeft.add(25, -25), nav.botRight.add(-25, -25), nav.topLeft.add(25, 25), nav.topRight.add(-25, 25)));
-
-        switchConfig("tank");
-
-        await nav.goto(ship.pos.farthestPoint(nav.botLeft, nav.botRight, nav.topLeft, nav.topRight));
-    }
-}

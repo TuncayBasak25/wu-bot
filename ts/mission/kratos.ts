@@ -1,16 +1,24 @@
 import { keyTap } from "../../robotjs";
-import { attack } from "../action/attack";
 import { attackKite } from "../action/kite";
 import { repair } from "../action/repair";
+import { Alien } from "../alien";
 import { buyX2 } from "../menu/starmission";
 import { nav } from "../nav";
 import { switchConfig } from "../param/config";
-import { killJumpUntil } from "./stage";
+import { ship } from "../ship";
+import { sleep, until, when } from "../util/sleep";
+import { attack, killJumpUntil } from "./stage";
+
+async function quitOnPortal() {
+    while (true) {
+        if (ship.portal) process.exit();
+
+        await sleep(0);
+    }
+}
 
 export async function kratos() {
     keyTap("h");
-
-    keyTap("w");
 
     await nav.starMission("kratos");
 
@@ -28,9 +36,14 @@ export async function kratos() {
     await killJumpUntil("vortex");
 
     await attackKite(17);
-    
-    await nav.quitStage();
 
-    switchConfig("speed");
-    keyTap("x");
+    quitOnPortal();
+
+    while (true) {
+        await nav.goto(nav.portals.nextStage);
+
+        while (!Alien.one()) await sleep(0);
+
+        await attack();
+    }
 }

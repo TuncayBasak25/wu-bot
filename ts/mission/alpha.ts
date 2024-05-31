@@ -9,29 +9,27 @@ import { switchConfig } from "../param/config";
 import { ship } from "../ship";
 import { mouse } from "../util/mouse";
 import { sleep, until, when } from "../util/sleep";
-import { assureNextStage, killJumpUntil } from "./stage";
+import { killJumpUntil } from "./stage";
 
 
-export async function alpha(skip = 0) {
-    skip || keyTap("h");
-    skip || keyTap("w");
-    //skip || await buyX2();
+export async function alpha() {
+    keyTap("h");
     await nav.starMission("alpha");
 
 
-    skip || await killJumpUntil("zavientos");
+    await killJumpUntil("zavientos");
 
-    skip || await attackKite(10);
-    skip || await killJumpUntil("magmius");
+    await attackKite(10);
+    await killJumpUntil("magmius");
 
-    skip || await attackKite(5);
-    skip || await killJumpUntil("bangoliour");
+    await attackKite(5);
+    await killJumpUntil("bangoliour");
 
-    skip || await attackKite(9);
+    await attackKite(9);
     await killJumpUntil("bangoliour", "xeon");
 
     await attackKite(8);
-    await assureNextStage("attack", true, true);
+    await killJumpUntil();
 
-    keyTap("x");
+    switchConfig("speed");
 }

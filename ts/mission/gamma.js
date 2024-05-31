@@ -15,9 +15,6 @@ const kite_1 = require("../action/kite");
 const alien_1 = require("../alien");
 const nav_1 = require("../nav");
 const config_1 = require("../param/config");
-const hud_1 = require("../param/hud");
-const ship_1 = require("../ship");
-const mouse_1 = require("../util/mouse");
 const sleep_1 = require("../util/sleep");
 const stage_1 = require("./stage");
 function gamma(skipWawe = 0) {
@@ -46,53 +43,8 @@ function gamma(skipWawe = 0) {
         yield (0, kite_1.attackKite)(15);
         yield (0, stage_1.killJumpUntil)("xeon", "bangoliour");
         yield (0, kite_1.attackKite)(6);
-        yield (0, stage_1.assureNextStage)("attack", true, true);
+        yield (0, stage_1.killJumpUntil)();
+        (0, config_1.switchConfig)("speed");
     });
 }
 exports.gamma = gamma;
-let keepConstantMove = false;
-const lastCoin = nav_1.nav.center;
-function constantMove() {
-    return __awaiter(this, void 0, void 0, function* () {
-        while (keepConstantMove) {
-            yield (0, sleep_1.when)(() => ship_1.ship.moving);
-            nav_1.nav.calibrate(ship_1.ship.pos.farthestPoint(nav_1.nav.botLeft, nav_1.nav.botRight, nav_1.nav.topLeft, nav_1.nav.topRight));
-        }
-    });
-}
-function ultraVortexStage() {
-    return __awaiter(this, void 0, void 0, function* () {
-        let vortexCount = 15;
-        (0, robotjs_1.keyTap)("v");
-        while (vortexCount > 0) {
-            (0, config_1.switchConfig)("tank");
-            const start = Date.now();
-            yield (0, sleep_1.when)(() => alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos)).length === 0);
-            if (Date.now() - start > 30000)
-                break;
-            while (ship_1.ship.shieldLevel > 5) {
-                if (ship_1.ship.healthLevel < 60)
-                    (0, robotjs_1.keyTap)("q");
-                while (!ship_1.ship.aim) {
-                    yield (0, sleep_1.when)(() => alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos)).length === 0);
-                    mouse_1.mouse.click(nav_1.nav.screenCenter.nearestPoint(...alien_1.Alien.all().map(a => a.pos).filter(a => (0, hud_1.outsideHud)(a))));
-                    yield (0, sleep_1.when)(() => !ship_1.ship.aim, 800);
-                }
-                const mrs = (vortexCount > 10) && setInterval(() => (0, robotjs_1.keyTap)("z"), 1500);
-                (0, robotjs_1.keyTap)("2");
-                yield (0, sleep_1.sleep)(mrs ? 3000 : 5000);
-                (0, robotjs_1.keyTap)("s");
-                (0, robotjs_1.keyTap)("a");
-                yield (0, sleep_1.until)(() => !ship_1.ship.aim);
-                mrs && clearInterval(mrs);
-                vortexCount--;
-            }
-            (0, config_1.switchConfig)("speed");
-            (0, robotjs_1.keyTap)("e");
-            yield (0, sleep_1.until)(() => ship_1.ship.speed === 506);
-            yield nav_1.nav.goto(ship_1.ship.pos.farthestPoint(nav_1.nav.botLeft.add(25, -25), nav_1.nav.botRight.add(-25, -25), nav_1.nav.topLeft.add(25, 25), nav_1.nav.topRight.add(-25, 25)));
-            (0, config_1.switchConfig)("tank");
-            yield nav_1.nav.goto(ship_1.ship.pos.farthestPoint(nav_1.nav.botLeft, nav_1.nav.botRight, nav_1.nav.topLeft, nav_1.nav.topRight));
-        }
-    });
-}

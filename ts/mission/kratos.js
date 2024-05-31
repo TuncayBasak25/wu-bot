@@ -12,13 +12,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.kratos = void 0;
 const robotjs_1 = require("../../robotjs");
 const kite_1 = require("../action/kite");
+const alien_1 = require("../alien");
 const nav_1 = require("../nav");
-const config_1 = require("../param/config");
+const ship_1 = require("../ship");
+const sleep_1 = require("../util/sleep");
 const stage_1 = require("./stage");
+function quitOnPortal() {
+    return __awaiter(this, void 0, void 0, function* () {
+        while (true) {
+            if (ship_1.ship.portal)
+                process.exit();
+            yield (0, sleep_1.sleep)(0);
+        }
+    });
+}
 function kratos() {
     return __awaiter(this, void 0, void 0, function* () {
         (0, robotjs_1.keyTap)("h");
-        (0, robotjs_1.keyTap)("w");
         yield nav_1.nav.starMission("kratos");
         yield (0, stage_1.killJumpUntil)("zavientos");
         yield (0, stage_1.killJumpUntil)("hydro");
@@ -28,9 +38,13 @@ function kratos() {
         yield (0, kite_1.attackKite)(40);
         yield (0, stage_1.killJumpUntil)("vortex");
         yield (0, kite_1.attackKite)(17);
-        yield nav_1.nav.quitStage();
-        (0, config_1.switchConfig)("speed");
-        (0, robotjs_1.keyTap)("x");
+        quitOnPortal();
+        while (true) {
+            yield nav_1.nav.goto(nav_1.nav.portals.nextStage);
+            while (!alien_1.Alien.one())
+                yield (0, sleep_1.sleep)(0);
+            yield (0, stage_1.attack)();
+        }
     });
 }
 exports.kratos = kratos;

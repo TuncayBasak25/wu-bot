@@ -15,38 +15,31 @@ import { beta } from "./mission/beta";
 import { gamma } from "./mission/gamma";
 import { kratos } from "./mission/kratos";
 import { buyX2, prepareAlpha, prepareBeta } from "./menu/starmission";
-import { assureNextStage, killJumpUntil } from "./mission/stage";
+import { killJumpUntil } from "./mission/stage";
+import { cycleMissions } from "./mission/prepare.";
 
 
+startScan();
+preventTWPopup();
 
 async function main()
 {
     //await showMouse()
-    //await buyX2(2);
     
-    startScan();
-    preventTWPopup();
 
-    //kite();    
-
-    // await nav.calibrate(nav.topRight.add(-30, 30));
     await nav.calibrate(nav.u7Base);
-     //await nav.calibrate(nav.center);
 
-    // nav.mapSpeedConstant = 155;
-    // await attackKite("magmius", 5); await nav.nextStage();
-
-   
-    
-    // await kratos();
+    await alpha();
+    await prepareAlpha();
+    await alpha();
+    await beta();
     await gamma();
-    // await alpha();
-    // await prepareAlpha();
-    // await alpha();
-    // await beta();
-    // await prepareBeta();
-    // await beta();
-    
+    await kratos();
+
+    process.exit();
+
+
+    cycleMissions();
 }
 main();
 

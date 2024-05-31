@@ -1,5 +1,4 @@
 import { keyTap } from "../../robotjs";
-import { attack } from "../action/attack";
 import { attackKite } from "../action/kite";
 import { repair } from "../action/repair";
 import { Alien, AlienName } from "../alien";
@@ -11,102 +10,81 @@ import { mouse } from "../util/mouse";
 import { sleep, until, when } from "../util/sleep";
 import Vector from "../util/vector";
 
-export async function notEndOfStage(endOfGate = false) {
-    await nav.goto(endOfGate ? nav.portals.endGate : nav.portals.nextStage);
+export async function attack() {
+    switchConfig("tank");
 
-    await until(() => ship.portal, 1000);
+    if (ship.shieldLevel < 30 && Alien.one().name !== "vortex") {
+        switchConfig("speed");
 
-    return !ship.portal;
-}
+        const velocity = new Vector(ship.pos.x <= nav.center.x ? 5 : -5, ship.pos.y <= nav.center.y ? 5 : -5);
 
+        while (Alien.one()) await nav.moveBy(velocity);
 
-export async function assureNextStage(killingWay: "attack" | "kite", jump = true, endOfGate = false) {
-    while (await notEndOfStage(endOfGate)) {
-        await when(() => !Alien.one());
+        switchConfig("tank");
+        await nav.moveBy(velocity);
 
-        killingWay === "attack" ? await attack(1) : await attackKite(1);
-    }
-
-    if (jump) {
-        endOfGate ? await nav.endGate() : keyTap("j");
-    }
-    
-}
-
-export async function killJumpUntil(...stoppingAlienList: AlienName[]) {
-    ship.x2();
-    while (true) {
         while (true) {
-            if (ship.pos.pointDistance(nav.portals.nextStage) > 20) switchConfig("speed");
-            
-            let moving = true;
-            nav.calibrate(nav.portals.nextStage).then(() => moving = false);
+            if (ship.shieldLevel > 90) break;
 
-            // await sleep(5000);
-
-            await when(() => moving && !Alien.one());
-
-            if (ship.portal) break;
-
-
-            while (Alien.one()) {
-                if (Alien.all(...stoppingAlienList).length > 0) return;
-                switchConfig("tank");
-                
-                if (ship.shieldLevel < 30 && Alien.one().name !== "vortex") {
-                    switchConfig("speed");
-                    
-                    const velocity = new Vector(ship.pos.x <= nav.center.x ? 5 : -5, ship.pos.y <= nav.center.y ? 5 : -5);
-                    
-                    while (Alien.one()) await nav.moveBy(velocity);
-                    
-                    switchConfig("tank");
-                    await nav.moveBy(velocity);
-  
-                    while (true) {
-                        if (ship.shieldLevel > 90) break;
-                        
-                        if (Alien.one()) await nav.moveBy(velocity);
-
-                        await sleep(0);
-                    }
-
-                    while (!Alien.one()) await nav.moveBy(velocity.clone.div(-5));
-                }
-                
-                if (Alien.all().filter(a => outsideHud(a.pos)).length > 0) {
-                    const target = Alien.all().filter(a => outsideHud(a.pos))
-                        .sort((a, b) => nav.screenCenter.pointDistance(a.pos) - nav.screenCenter.pointDistance(b.pos))[0];
-
-                    if (target.name === "magmius" || target.name === "zavientos") {
-                        await attackKite(1);
-                    }
-                    else {
-                        mouse.click(target.pos);
-                        await when(() => !ship.aim, 1000);
-                        ship.attack();
-
-                        const assureAttack = setInterval(() => ship.attack(), 3000);
-
-
-                        await until(() => !ship.aim);
-
-                        clearInterval(assureAttack);
-                    }
-                    
-
-                }
-
-                await sleep(0);
-            }
+            if (Alien.one()) await nav.moveBy(velocity);
 
             await sleep(0);
         }
+
+        while (!Alien.one()) await nav.moveBy(velocity.clone.div(-5));
+    }
+
+    if (Alien.all().filter(a => outsideHud(a.pos)).length > 0) {
+        const target = Alien.all().filter(a => outsideHud(a.pos))
+            .sort((a, b) => nav.screenCenter.pointDistance(a.pos) - nav.screenCenter.pointDistance(b.pos))[0];
+
+        if (["hydro", "jenta", "mali"].includes(target.name)) ship.x2();
+        else if (nav.map === "alpha") ship.x3();
+        else ship.x4();
+
+        if (target.name === "magmius" || target.name === "zavientos") {
+            await attackKite(1);
+        }
+        else {
+            mouse.click(target.pos);
+            await when(() => !ship.aim, 1000);
+            ship.attack();
+
+            const assureAttack = setInterval(() => ship.attack(), 3000);
+
+
+            await until(() => !ship.aim);
+
+            clearInterval(assureAttack);
+        }
+    }
+}
+
+export async function killJumpUntil(...stoppingAlienList: AlienName[]) {
+    const nextGate = stoppingAlienList.length === 0 ? nav.portals.endGate : nav.portals.nextStage;
+
+    switchConfig("speed");
+    await nav.goto(nextGate);
+    
+    await until(() => ship.portal || !!Alien.one());
+
+    if (ship.portal) {
         switchConfig("tank");
 
         await until(() => ship.shieldLevel > 90 && ship.healthLevel > 90);
 
-        keyTap("j");
-        await sleep(6000);
+        if (stoppingAlienList.length === 0) return await nav.endGate();
+        else await nav.nextStage();
     }
+    else {
+        while (Alien.one()) {
+            if (stoppingAlienList.length > 0 && Alien.all(...stoppingAlienList).length > 0) return;
+            
+            await attack();
+
+            await sleep(0);
+        }
+    }
+
+    await killJumpUntil(...stoppingAlienList);
 }

@@ -10,7 +10,7 @@ const alien_1 = require("./alien");
 var LaserAmmo;
 (function (LaserAmmo) {
     LaserAmmo["x2"] = "1";
-    LaserAmmo["x3"] = "4";
+    LaserAmmo["x3"] = "3";
     LaserAmmo["x4"] = "a";
     LaserAmmo["abs"] = "2";
 })(LaserAmmo || (LaserAmmo = {}));

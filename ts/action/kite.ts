@@ -75,6 +75,7 @@ export async function attackKite(enemyCount: number) {
         }
 
         if (["hydro", "jenta", "mali"].includes(target.name)) ship.x2();
+        else if (nav.map === "alpha") ship.x3();
         else ship.x4();
     
         ship.attack();

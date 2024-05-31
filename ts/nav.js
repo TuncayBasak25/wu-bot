@@ -64,6 +64,9 @@ class Nav {
     quitStage() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.goto(this.portals.quitStage);
+            this.map = "u7";
+            ship_1.ship.pos.set(this.u7Base);
+            this.mapSpeedConstant = 105;
             (0, robotjs_1.keyTap)("j");
             yield (0, sleep_1.sleep)(5000);
         });

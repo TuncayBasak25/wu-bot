@@ -6,7 +6,7 @@ import { Promotion } from "./alien";
 
 enum LaserAmmo {
     x2 = "1",
-    x3 = "4",
+    x3 = "3",
     x4 = "a",
     abs = "2",
 }
