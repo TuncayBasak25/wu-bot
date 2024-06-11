@@ -33,6 +33,8 @@ async function main()
     await prepareAlpha();
     await alpha();
     await beta();
+    // await prepareBeta();
+    // await beta();
     await gamma();
     await kratos();
 

@@ -31,6 +31,8 @@ function main() {
         yield (0, starmission_1.prepareAlpha)();
         yield (0, alpha_1.alpha)();
         yield (0, beta_1.beta)();
+        // await prepareBeta();
+        // await beta();
         yield (0, gamma_1.gamma)();
         yield (0, kratos_1.kratos)();
         process.exit();

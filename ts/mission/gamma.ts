@@ -50,6 +50,8 @@ export async function gamma(skipWawe = 0) {
     await attackKite(6);
     await killJumpUntil();
 
-    switchConfig("speed");
+    await switchConfig("speed");
+
+
 }
 

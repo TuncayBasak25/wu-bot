@@ -75,7 +75,8 @@ export async function attackKite(enemyCount: number) {
         }
 
         if (["hydro", "jenta", "mali"].includes(target.name)) ship.x2();
-        else if (nav.map === "alpha") ship.x3();
+        else if (nav.map === "alpha" || nav.map === "beta" || nav.map === "kratos") ship.x2();
+        else if (!["magmius", "vortex"].includes(target.name)) ship.x2();
         else ship.x4();
     
         ship.attack();

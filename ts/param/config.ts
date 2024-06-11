@@ -29,6 +29,8 @@ configChecker();
 
 export async function switchConfig(targetConfig: Config) {
     targetState = targetConfig;
+
+    await until(() => targetState === state);
 }
 
 export function actualConfig() {

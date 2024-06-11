@@ -21,7 +21,10 @@ const queryList = [
     AlienHex.magmius, 2, 0,
     0xeedaf0, 5, 1,//Moving reactors
     0xEFFADA, 25, 1,//Portal
-    0xFFFFFF, 300, 1
+    0xFFFFFF, 300, 1, //TW window
+
+    0xEE0FCC, 2, 0, //Bonus box
+    0xEE0FCD, 2, 0 //Cargo box
 ]
 
 // const measureList = [
@@ -88,6 +91,12 @@ export async function startScan(cooldown: number = 0) {
             Alien.list.push(alien);
         }
     }
+
+    ship.bonusBoxes = [];
+    ship.cargoBoxes = [];
+
+    for (const bonusBoxPos of response[0][15]) ship.bonusBoxes.push(new Vector().set(bonusBoxPos));
+    for (const cargoBoxPos of response[0][16]) ship.cargoBoxes.push(new Vector().set(cargoBoxPos));
 
     await sleep(cooldown);
 

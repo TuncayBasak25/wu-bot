@@ -75,8 +75,10 @@ function attackKite(enemyCount) {
             }
             if (["hydro", "jenta", "mali"].includes(target.name))
                 ship_1.ship.x2();
-            else if (nav_1.nav.map === "alpha")
-                ship_1.ship.x3();
+            else if (nav_1.nav.map === "alpha" || nav_1.nav.map === "beta" || nav_1.nav.map === "kratos")
+                ship_1.ship.x2();
+            else if (!["magmius", "vortex"].includes(target.name))
+                ship_1.ship.x2();
             else
                 ship_1.ship.x4();
             ship_1.ship.attack();

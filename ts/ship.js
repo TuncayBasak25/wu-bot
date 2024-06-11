@@ -25,6 +25,8 @@ class Ship {
         this.tw = false;
         this.disconnected = false;
         this.promotion = alien_1.Promotion.normal;
+        this.bonusBoxes = [];
+        this.cargoBoxes = [];
         this.laserAmmo = LaserAmmo.x2;
         this.pos = new vector_1.default(0, 0);
     }

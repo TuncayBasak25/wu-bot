@@ -41,6 +41,6 @@ export async function beta() {
 
     await killJumpUntil();
 
-    switchConfig("speed");
+    await switchConfig("speed");
 }
 

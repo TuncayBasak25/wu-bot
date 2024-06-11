@@ -28,6 +28,9 @@ export class Ship {
     promotion = Promotion.normal;
     aim?: Vector;
 
+    bonusBoxes: Vector[] = [];
+    cargoBoxes: Vector[] = [];
+
 
     laserAmmo: LaserAmmo = LaserAmmo.x2;
     attack() {

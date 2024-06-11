@@ -34,7 +34,7 @@ function beta() {
         yield (0, stage_1.killJumpUntil)("xeon", "bangoliour");
         yield (0, kite_1.attackKite)(6);
         yield (0, stage_1.killJumpUntil)();
-        (0, config_1.switchConfig)("speed");
+        yield (0, config_1.switchConfig)("speed");
     });
 }
 exports.beta = beta;

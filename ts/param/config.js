@@ -34,6 +34,7 @@ configChecker();
 function switchConfig(targetConfig) {
     return __awaiter(this, void 0, void 0, function* () {
         targetState = targetConfig;
+        yield (0, sleep_1.until)(() => targetState === state);
     });
 }
 exports.switchConfig = switchConfig;

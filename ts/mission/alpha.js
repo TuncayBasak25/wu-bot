@@ -28,7 +28,7 @@ function alpha() {
         yield (0, stage_1.killJumpUntil)("bangoliour", "xeon");
         yield (0, kite_1.attackKite)(8);
         yield (0, stage_1.killJumpUntil)();
-        (0, config_1.switchConfig)("speed");
+        yield (0, config_1.switchConfig)("speed");
     });
 }
 exports.alpha = alpha;

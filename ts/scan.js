@@ -34,7 +34,9 @@ const queryList = [
     alien_1.AlienHex.magmius, 2, 0,
     0xeedaf0, 5, 1, //Moving reactors
     0xEFFADA, 25, 1, //Portal
-    0xFFFFFF, 300, 1
+    0xFFFFFF, 300, 1, //TW window
+    0xEE0FCC, 2, 0, //Bonus box
+    0xEE0FCD, 2, 0 //Cargo box
 ];
 // const measureList = [
 //     0x3cac19, 910, 448, 1009, 451,
@@ -90,6 +92,12 @@ function startScan(cooldown = 0) {
                 alien_1.Alien.list.push(alien);
             }
         }
+        ship_1.ship.bonusBoxes = [];
+        ship_1.ship.cargoBoxes = [];
+        for (const bonusBoxPos of response[0][15])
+            ship_1.ship.bonusBoxes.push(new vector_1.default().set(bonusBoxPos));
+        for (const cargoBoxPos of response[0][16])
+            ship_1.ship.cargoBoxes.push(new vector_1.default().set(cargoBoxPos));
         yield (0, sleep_1.sleep)(cooldown);
         yield startScan();
     });

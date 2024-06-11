@@ -31,5 +31,5 @@ export async function alpha() {
     await attackKite(8);
     await killJumpUntil();
 
-    switchConfig("speed");
+    await switchConfig("speed");
 }

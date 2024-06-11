@@ -39,7 +39,8 @@ export async function attack() {
             .sort((a, b) => nav.screenCenter.pointDistance(a.pos) - nav.screenCenter.pointDistance(b.pos))[0];
 
         if (["hydro", "jenta", "mali"].includes(target.name)) ship.x2();
-        else if (nav.map === "alpha") ship.x3();
+        else if (nav.map === "alpha" || nav.map === "beta" || nav.map === "kratos") ship.x2();
+        else if (!["magmius", "vortex"].includes(target.name)) ship.x2();
         else ship.x4();
 
         if (target.name === "magmius" || target.name === "zavientos") {
@@ -50,7 +51,7 @@ export async function attack() {
             await when(() => !ship.aim, 1000);
             ship.attack();
 
-            const assureAttack = setInterval(() => ship.attack(), 3000);
+            const assureAttack = setInterval(() => ship.attack(), 1000);
 
 
             await until(() => !ship.aim);

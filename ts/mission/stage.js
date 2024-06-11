@@ -47,8 +47,10 @@ function attack() {
                 .sort((a, b) => nav_1.nav.screenCenter.pointDistance(a.pos) - nav_1.nav.screenCenter.pointDistance(b.pos))[0];
             if (["hydro", "jenta", "mali"].includes(target.name))
                 ship_1.ship.x2();
-            else if (nav_1.nav.map === "alpha")
-                ship_1.ship.x3();
+            else if (nav_1.nav.map === "alpha" || nav_1.nav.map === "beta" || nav_1.nav.map === "kratos")
+                ship_1.ship.x2();
+            else if (!["magmius", "vortex"].includes(target.name))
+                ship_1.ship.x2();
             else
                 ship_1.ship.x4();
             if (target.name === "magmius" || target.name === "zavientos") {
@@ -58,7 +60,7 @@ function attack() {
                 mouse_1.mouse.click(target.pos);
                 yield (0, sleep_1.when)(() => !ship_1.ship.aim, 1000);
                 ship_1.ship.attack();
-                const assureAttack = setInterval(() => ship_1.ship.attack(), 3000);
+                const assureAttack = setInterval(() => ship_1.ship.attack(), 1000);
                 yield (0, sleep_1.until)(() => !ship_1.ship.aim);
                 clearInterval(assureAttack);
             }
