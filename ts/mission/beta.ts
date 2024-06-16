@@ -13,34 +13,34 @@ import { killJumpUntil } from "./stage";
 
 export async function beta() {
     keyTap("h");
-
+    
     await nav.starMission("beta");
-
+    
     await killJumpUntil("xeon");
     
     await attackKite(10);
     await killJumpUntil("bangoliour");
-
+    
     await attackKite(20);
     await killJumpUntil("zavientos");
-
+    
     await attackKite(10);
     await killJumpUntil("magmius");
-
+    
     await attackKite(5);
     await killJumpUntil("bangoliour");
-
+    
     await attackKite(7);
     await killJumpUntil("vortex");
-
+    
     
     await attackKite(15);
     await killJumpUntil("xeon", "bangoliour");
     
     await attackKite(6);
-
+    
     await killJumpUntil();
-
+    
     await switchConfig("speed");
 }
 

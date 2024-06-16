@@ -16,15 +16,15 @@ import { killJumpUntil } from "./stage";
 export async function gamma(skipWawe = 0) {
     keyTap("h");
     // await buyX2(2);
-
+    
     await nav.starMission("gamma");
-
+    
     await killJumpUntil("xeon");
     await attackKite(10);
-
+    
     await killJumpUntil("bangoliour");
     await attackKite(20);
-
+    
     await killJumpUntil("zavientos");
     await attackKite(5);
     
@@ -37,21 +37,21 @@ export async function gamma(skipWawe = 0) {
     await nav.goto(nav.topRight);
     await when(() => !Alien.one());
     await attackKite(5);
-
+    
     await killJumpUntil("bangoliour");
-
+    
     await attackKite(5);
-
+    
     await killJumpUntil("vortex");
     await attackKite(15);
-
+    
     await killJumpUntil("xeon", "bangoliour");
-
+    
     await attackKite(6);
     await killJumpUntil();
-
+    
     await switchConfig("speed");
-
-
+    
+    
 }
 

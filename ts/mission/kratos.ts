@@ -18,8 +18,6 @@ async function quitOnPortal() {
 }
 
 export async function kratos() {
-    keyTap("h");
-
     await nav.starMission("kratos");
 
     await killJumpUntil("zavientos");

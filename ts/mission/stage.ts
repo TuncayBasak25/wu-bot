@@ -20,7 +20,8 @@ export async function attack() {
 
         while (Alien.one()) await nav.moveBy(velocity);
 
-        switchConfig("tank");
+        await switchConfig("tank");
+        await sleep(500);
         await nav.moveBy(velocity);
 
         while (true) {

@@ -25,7 +25,7 @@ async function hide() {
 }
 
 const menuBox = new Box(873, 909, 1049, 1032)
-const minimapBox = new Box(0, 800, 360, 1032)
+const minimapBox = new Box(0, 790, 360, 1032)
 const topMenuBox = new Box(850, 0, 1160, 80)
 const lazerGameBox = new Box(1600, 590, 1920, 1080);
 

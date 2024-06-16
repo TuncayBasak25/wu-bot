@@ -93,6 +93,11 @@ class Nav {
 
 
     async goto(target: Vector) {
+        if (target.x < 0) target.setX(0);
+        else if (target.x > nav.botRight.x) target.setX(nav.botRight.x);
+        if (target.y < 0) target.setY(0);
+        else if (target.y > nav.botRight.y) target.setY(nav.botRight.y);
+        
         const distance = ship.pos.pointDistance(target);
 
         ship.pos.set(target);

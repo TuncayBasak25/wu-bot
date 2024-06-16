@@ -33,7 +33,7 @@ function hide() {
     });
 }
 const menuBox = new box_1.Box(873, 909, 1049, 1032);
-const minimapBox = new box_1.Box(0, 800, 360, 1032);
+const minimapBox = new box_1.Box(0, 790, 360, 1032);
 const topMenuBox = new box_1.Box(850, 0, 1160, 80);
 const lazerGameBox = new box_1.Box(1600, 590, 1920, 1080);
 function outsideHud(point) {

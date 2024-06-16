@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.kratos = void 0;
-const robotjs_1 = require("../../robotjs");
 const kite_1 = require("../action/kite");
 const alien_1 = require("../alien");
 const nav_1 = require("../nav");
@@ -28,7 +27,6 @@ function quitOnPortal() {
 }
 function kratos() {
     return __awaiter(this, void 0, void 0, function* () {
-        (0, robotjs_1.keyTap)("h");
         yield nav_1.nav.starMission("kratos");
         yield (0, stage_1.killJumpUntil)("zavientos");
         yield (0, stage_1.killJumpUntil)("hydro");

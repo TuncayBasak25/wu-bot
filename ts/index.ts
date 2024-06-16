@@ -29,17 +29,6 @@ async function main()
 
     await nav.calibrate(nav.u7Base);
 
-    await alpha();
-    await prepareAlpha();
-    await alpha();
-    await beta();
-    // await prepareBeta();
-    // await beta();
-    await gamma();
-    await kratos();
-
-    process.exit();
-
 
     cycleMissions();
 }

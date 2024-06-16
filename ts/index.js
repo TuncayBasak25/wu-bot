@@ -15,11 +15,6 @@ const ship_1 = require("./ship");
 const sleep_1 = require("./util/sleep");
 const nav_1 = require("./nav");
 const scan_1 = require("./scan");
-const alpha_1 = require("./mission/alpha");
-const beta_1 = require("./mission/beta");
-const gamma_1 = require("./mission/gamma");
-const kratos_1 = require("./mission/kratos");
-const starmission_1 = require("./menu/starmission");
 const prepare_1 = require("./mission/prepare.");
 (0, scan_1.startScan)();
 preventTWPopup();
@@ -27,15 +22,6 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         //await showMouse()
         yield nav_1.nav.calibrate(nav_1.nav.u7Base);
-        yield (0, alpha_1.alpha)();
-        yield (0, starmission_1.prepareAlpha)();
-        yield (0, alpha_1.alpha)();
-        yield (0, beta_1.beta)();
-        // await prepareBeta();
-        // await beta();
-        yield (0, gamma_1.gamma)();
-        yield (0, kratos_1.kratos)();
-        process.exit();
         (0, prepare_1.cycleMissions)();
     });
 }

@@ -95,6 +95,14 @@ class Nav {
     }
     goto(target) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (target.x < 0)
+                target.setX(0);
+            else if (target.x > exports.nav.botRight.x)
+                target.setX(exports.nav.botRight.x);
+            if (target.y < 0)
+                target.setY(0);
+            else if (target.y > exports.nav.botRight.y)
+                target.setY(exports.nav.botRight.y);
             const distance = ship_1.ship.pos.pointDistance(target);
             ship_1.ship.pos.set(target);
             mouse_1.mouse.click(target.add(this.minimapOffset));

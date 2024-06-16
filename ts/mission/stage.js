@@ -30,7 +30,8 @@ function attack() {
             const velocity = new vector_1.default(ship_1.ship.pos.x <= nav_1.nav.center.x ? 5 : -5, ship_1.ship.pos.y <= nav_1.nav.center.y ? 5 : -5);
             while (alien_1.Alien.one())
                 yield nav_1.nav.moveBy(velocity);
-            (0, config_1.switchConfig)("tank");
+            yield (0, config_1.switchConfig)("tank");
+            yield (0, sleep_1.sleep)(500);
             yield nav_1.nav.moveBy(velocity);
             while (true) {
                 if (ship_1.ship.shieldLevel > 90)
