@@ -74,10 +74,16 @@ export async function attackKite(enemyCount: number) {
             if (!ship.aim) target = undefined;
         }
 
-        if (["hydro", "jenta", "mali"].includes(target.name)) ship.x2();
-        else if (nav.map === "alpha" || nav.map === "beta" || nav.map === "kratos") ship.x2();
-        else if (!["magmius", "vortex"].includes(target.name)) ship.x2();
-        else ship.x4();
+        ship.x2();
+        ship.nc();
+        if (nav.map === "beta" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {
+            ship.x3();
+            ship.tnc();
+        }
+        if (nav.map === "gamma" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {
+            ship.x4();
+            ship.tnc();
+        }
     
         ship.attack();
 

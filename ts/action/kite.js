@@ -73,14 +73,16 @@ function attackKite(enemyCount) {
                 if (!ship_1.ship.aim)
                     target = undefined;
             }
-            if (["hydro", "jenta", "mali"].includes(target.name))
-                ship_1.ship.x2();
-            else if (nav_1.nav.map === "alpha" || nav_1.nav.map === "beta" || nav_1.nav.map === "kratos")
-                ship_1.ship.x2();
-            else if (!["magmius", "vortex"].includes(target.name))
-                ship_1.ship.x2();
-            else
+            ship_1.ship.x2();
+            ship_1.ship.nc();
+            if (nav_1.nav.map === "beta" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {
+                ship_1.ship.x3();
+                ship_1.ship.tnc();
+            }
+            if (nav_1.nav.map === "gamma" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {
                 ship_1.ship.x4();
+                ship_1.ship.tnc();
+            }
             ship_1.ship.attack();
             if (yield kite(target)) {
                 enemyCount--;

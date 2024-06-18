@@ -33,6 +33,19 @@ export class Ship {
 
 
     laserAmmo: LaserAmmo = LaserAmmo.x2;
+
+    rocket: "nc" | "tnc" =  "nc";
+
+    tnc() {
+        if (this.rocket === "nc") keyTap("x");
+        this.rocket = "tnc"
+    }
+
+    nc() {
+        if (this.rocket === "tnc") keyTap("w");
+        this.rocket = "nc";
+    }
+
     attack() {
         keyTap(this.laserAmmo);
     }

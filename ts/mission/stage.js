@@ -46,14 +46,16 @@ function attack() {
         if (alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos)).length > 0) {
             const target = alien_1.Alien.all().filter(a => (0, hud_1.outsideHud)(a.pos))
                 .sort((a, b) => nav_1.nav.screenCenter.pointDistance(a.pos) - nav_1.nav.screenCenter.pointDistance(b.pos))[0];
-            if (["hydro", "jenta", "mali"].includes(target.name))
-                ship_1.ship.x2();
-            else if (nav_1.nav.map === "alpha" || nav_1.nav.map === "beta" || nav_1.nav.map === "kratos")
-                ship_1.ship.x2();
-            else if (!["magmius", "vortex"].includes(target.name))
-                ship_1.ship.x2();
-            else
+            ship_1.ship.x2();
+            ship_1.ship.nc();
+            if (nav_1.nav.map === "beta" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {
+                ship_1.ship.x3();
+                ship_1.ship.tnc();
+            }
+            if (nav_1.nav.map === "gamma" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {
                 ship_1.ship.x4();
+                ship_1.ship.tnc();
+            }
             if (target.name === "magmius" || target.name === "zavientos") {
                 yield (0, kite_1.attackKite)(1);
             }

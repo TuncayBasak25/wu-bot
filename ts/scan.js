@@ -20,7 +20,7 @@ const mouse_1 = require("./util/mouse");
 const sleep_1 = require("./util/sleep");
 const vector_1 = __importDefault(require("./util/vector"));
 const queryList = [
-    0xFF0000, 25, 1, //Aim
+    0xFF0000, 25, 1,
     alien_1.AlienHex.hydro, 2, 0,
     alien_1.AlienHex.jenta, 2, 0,
     alien_1.AlienHex.mali, 2, 0,
@@ -32,10 +32,10 @@ const queryList = [
     alien_1.AlienHex.xeon, 2, 0,
     alien_1.AlienHex.zavientos, 2, 0,
     alien_1.AlienHex.magmius, 2, 0,
-    0xeedaf0, 5, 1, //Moving reactors
-    0xEFFADA, 25, 1, //Portal
-    0xFFFFFF, 300, 1, //TW window
-    0xEE0FCC, 2, 0, //Bonus box
+    0xeedaf0, 5, 1,
+    0xEFFADA, 25, 1,
+    0xFFFFFF, 300, 1,
+    0xEE0FCC, 2, 0,
     0xEE0FCD, 2, 0 //Cargo box
 ];
 // const measureList = [
@@ -45,9 +45,9 @@ const queryList = [
 const healthList = [];
 const shieldList = [];
 const measureList = [
-    0x3cac19, 910, 435, 1009, 438, //Health
-    0x1b9dda, 910, 442, 1009, 445, //Shield
-    0xE1B727, 910, 435, 1009, 438, //Extra Health
+    0x3cac19, 910, 435, 1009, 438,
+    0x1b9dda, 910, 442, 1009, 445,
+    0xE1B727, 910, 435, 1009, 438,
     0x205C0D, 910, 435, 1009, 438, //Extra Background
 ];
 //1250, 410 rep red

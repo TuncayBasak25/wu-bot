@@ -28,7 +28,18 @@ class Ship {
         this.bonusBoxes = [];
         this.cargoBoxes = [];
         this.laserAmmo = LaserAmmo.x2;
+        this.rocket = "nc";
         this.pos = new vector_1.default(0, 0);
+    }
+    tnc() {
+        if (this.rocket === "nc")
+            (0, robotjs_1.keyTap)("x");
+        this.rocket = "tnc";
+    }
+    nc() {
+        if (this.rocket === "tnc")
+            (0, robotjs_1.keyTap)("w");
+        this.rocket = "nc";
     }
     attack() {
         (0, robotjs_1.keyTap)(this.laserAmmo);

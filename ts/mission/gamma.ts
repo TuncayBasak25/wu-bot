@@ -52,6 +52,5 @@ export async function gamma(skipWawe = 0) {
     
     await switchConfig("speed");
     
-    
 }
 
