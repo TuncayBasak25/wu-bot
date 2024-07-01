@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.gamma = void 0;
-const robotjs_1 = require("../../robotjs");
 const kite_1 = require("../action/kite");
 const alien_1 = require("../alien");
 const nav_1 = require("../nav");
@@ -19,8 +18,6 @@ const sleep_1 = require("../util/sleep");
 const stage_1 = require("./stage");
 function gamma(skipWawe = 0) {
     return __awaiter(this, void 0, void 0, function* () {
-        (0, robotjs_1.keyTap)("h");
-        // await buyX2(2);
         yield nav_1.nav.starMission("gamma");
         yield (0, stage_1.killJumpUntil)("xeon");
         yield (0, kite_1.attackKite)(10);

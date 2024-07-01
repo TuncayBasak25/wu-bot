@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.alpha = void 0;
-const robotjs_1 = require("../../robotjs");
 const kite_1 = require("../action/kite");
 const nav_1 = require("../nav");
 const config_1 = require("../param/config");
 const stage_1 = require("./stage");
 function alpha() {
     return __awaiter(this, void 0, void 0, function* () {
-        (0, robotjs_1.keyTap)("h");
         yield nav_1.nav.starMission("alpha");
+        yield (0, stage_1.killJumpUntil)("bangoliour");
+        yield (0, kite_1.attackKite)(20);
         yield (0, stage_1.killJumpUntil)("zavientos");
         yield (0, kite_1.attackKite)(10);
         yield (0, stage_1.killJumpUntil)("magmius");

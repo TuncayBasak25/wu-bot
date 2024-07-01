@@ -14,9 +14,6 @@ import { killJumpUntil } from "./stage";
 
 
 export async function gamma(skipWawe = 0) {
-    keyTap("h");
-    // await buyX2(2);
-    
     await nav.starMission("gamma");
     
     await killJumpUntil("xeon");

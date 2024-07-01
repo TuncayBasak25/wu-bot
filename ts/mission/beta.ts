@@ -12,8 +12,6 @@ import { killJumpUntil } from "./stage";
 
 
 export async function beta() {
-    keyTap("h");
-    
     await nav.starMission("beta");
     
     await killJumpUntil("xeon");

@@ -13,9 +13,10 @@ import { killJumpUntil } from "./stage";
 
 
 export async function alpha() {
-    keyTap("h");
     await nav.starMission("alpha");
     
+    await killJumpUntil("bangoliour");
+    await attackKite(20);
     
     await killJumpUntil("zavientos");
     
