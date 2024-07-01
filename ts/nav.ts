@@ -1,7 +1,7 @@
 import { keyTap } from "../robotjs";
 import { mouse } from "./util/mouse";
 import { ship } from "./ship";
-import { sleep, when } from "./util/sleep";
+import { sleep, until, when } from "./util/sleep";
 import Vector, { Point } from "./util/vector";
 
 type StarMission = "alpha" | "beta" | "gamma" | "kratos";
@@ -73,6 +73,7 @@ class Nav {
         this.mapSpeedConstant = 105;
 
         keyTap("j");
+        keyTap("h");
         await sleep(5000);
     }
 
@@ -91,22 +92,40 @@ class Nav {
         await when(() => ship.moving);
     }
 
+    private target = new Vector(12, 12);
+    private async move() {
+        while (true) {
+            await until(() => this.moving);
+
+            mouse.click(this.target.clone.add(this.minimapOffset));
+
+            const startDiff = this.target.clone.sub(ship.pos);
+
+            do {
+                const start = Date.now();
+                await sleep(0);
+                const deltaT = Date.now() - start;
+
+                ship.pos.add(startDiff.clone.setNorme(ship.speed * deltaT / this.mapSpeedConstant / 506));
+            } while (this.target.clone.sub(ship.pos).scalar(startDiff) > 0.95);
+
+            ship.pos.set(this.target);
+
+            this.moving = false;
+        }
+    }
 
     async goto(target: Vector) {
         if (target.x < 0) target.setX(0);
         else if (target.x > nav.botRight.x) target.setX(nav.botRight.x);
         if (target.y < 0) target.setY(0);
         else if (target.y > nav.botRight.y) target.setY(nav.botRight.y);
-        
-        const distance = ship.pos.pointDistance(target);
 
-        ship.pos.set(target);
-
-        mouse.click(target.add(this.minimapOffset));
+        this.target.set(target);
 
         this.moving = true;
-        await sleep(506 / ship.speed * this.mapSpeedConstant * distance);
-        this.moving = false;
+
+        await when(() => this.moving);
     }
 
     async moveBy(deltaX: number, deltaY: number): Promise<void>;
@@ -149,3 +168,5 @@ class Nav {
 }
 
 export const nav = new Nav();
+
+(nav as any).move();
