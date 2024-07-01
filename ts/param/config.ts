@@ -12,7 +12,7 @@ async function configChecker() {
     while (true) {
         if (state !== targetState) {
             state = targetState;
-            ship.speed = state === "speed" ? 506 : 330;
+            ship.speed = state === "speed" ? 495 : 363;
 
             if (targetState == "speed" && getPixelColor(1018, 442) != "ffffff" || targetState == "tank" && getPixelColor(900, 442) != "ffffff") {    
                 keyTap("c");
