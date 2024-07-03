@@ -29,13 +29,13 @@ async function main()
 
     await nav.calibrate(nav.u7Base);
 
-    // await alpha();
-    // await prepareAlpha();
-    // await alpha();
+    // await gamma();
     await beta();
+    await alpha();
+    await prepareAlpha();
+    await alpha();
     // await prepareBeta();
     // await beta();
-    // await gamma();
     await kratos();
 
 

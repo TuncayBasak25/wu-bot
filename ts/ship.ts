@@ -18,7 +18,7 @@ export class Ship {
 
     damage = 13000;
 
-    speed = 506;
+    speed = 495;
     moving = false;
 
     portal = false;

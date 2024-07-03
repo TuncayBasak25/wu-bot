@@ -19,7 +19,7 @@ class Ship {
         this.healthLevel = 0;
         this.shieldLevel = 0;
         this.damage = 13000;
-        this.speed = 506;
+        this.speed = 495;
         this.moving = false;
         this.portal = false;
         this.tw = false;

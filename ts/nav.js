@@ -23,6 +23,7 @@ class Nav {
         this.map = "u7";
         this.mapSpeedConstant = 105;
         this.moving = false;
+        this.target = new vector_1.default(12, 12);
     }
     starMission(starMission) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -77,6 +78,8 @@ class Nav {
             this.map = "u7";
             ship_1.ship.pos.set(this.u7Base);
             this.mapSpeedConstant = 105;
+            yield (0, sleep_1.sleep)(5000);
+            (0, robotjs_1.keyTap)("h");
             (0, robotjs_1.keyTap)("j");
             yield (0, sleep_1.sleep)(5000);
         });
@@ -93,6 +96,23 @@ class Nav {
             yield (0, sleep_1.when)(() => ship_1.ship.moving);
         });
     }
+    move() {
+        return __awaiter(this, void 0, void 0, function* () {
+            while (true) {
+                yield (0, sleep_1.until)(() => this.moving);
+                mouse_1.mouse.click(this.target.clone.add(this.minimapOffset));
+                const startDiff = this.target.clone.sub(ship_1.ship.pos);
+                do {
+                    const start = Date.now();
+                    yield (0, sleep_1.sleep)(0);
+                    const deltaT = Date.now() - start;
+                    ship_1.ship.pos.add(startDiff.clone.setNorme(ship_1.ship.speed * deltaT / this.mapSpeedConstant / 506));
+                } while (this.target.clone.sub(ship_1.ship.pos).scalar(startDiff) > 0.95);
+                ship_1.ship.pos.set(this.target);
+                this.moving = false;
+            }
+        });
+    }
     goto(target) {
         return __awaiter(this, void 0, void 0, function* () {
             if (target.x < 0)
@@ -103,12 +123,9 @@ class Nav {
                 target.setY(0);
             else if (target.y > exports.nav.botRight.y)
                 target.setY(exports.nav.botRight.y);
-            const distance = ship_1.ship.pos.pointDistance(target);
-            ship_1.ship.pos.set(target);
-            mouse_1.mouse.click(target.add(this.minimapOffset));
+            this.target.set(target);
             this.moving = true;
-            yield (0, sleep_1.sleep)(506 / ship_1.ship.speed * this.mapSpeedConstant * distance);
-            this.moving = false;
+            yield (0, sleep_1.when)(() => this.moving);
         });
     }
     moveBy(a, b) {
@@ -140,3 +157,4 @@ class Nav {
     }
 }
 exports.nav = new Nav();
+exports.nav.move();

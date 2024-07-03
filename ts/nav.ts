@@ -72,8 +72,10 @@ class Nav {
         ship.pos.set(this.u7Base);
         this.mapSpeedConstant = 105;
 
-        keyTap("j");
+        await sleep(5000);
         keyTap("h");
+        
+        keyTap("j");
         await sleep(5000);
     }
 

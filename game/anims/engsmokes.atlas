@@ -1,0 +1,230 @@
+
+engsmokes.png
+size: 2048, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Comp 1
+  rotate: false
+  xy: 2, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 0
+Comp 1
+  rotate: false
+  xy: 50, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 1
+Comp 1
+  rotate: false
+  xy: 98, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 2
+Comp 1
+  rotate: false
+  xy: 146, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 3
+Comp 1
+  rotate: false
+  xy: 194, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 4
+Comp 1
+  rotate: false
+  xy: 242, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 5
+Comp 1
+  rotate: false
+  xy: 290, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 6
+Comp 1
+  rotate: false
+  xy: 338, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 7
+Comp 1
+  rotate: false
+  xy: 386, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 8
+Comp 1
+  rotate: false
+  xy: 434, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 9
+Comp 1
+  rotate: false
+  xy: 482, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 10
+Comp 1
+  rotate: false
+  xy: 530, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 11
+Comp 1
+  rotate: false
+  xy: 578, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 12
+Comp 1
+  rotate: false
+  xy: 626, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 13
+Comp 1
+  rotate: false
+  xy: 674, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 14
+Comp 1
+  rotate: false
+  xy: 722, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 15
+Comp 1
+  rotate: false
+  xy: 770, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 16
+Comp 1
+  rotate: false
+  xy: 818, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 17
+Comp 1
+  rotate: false
+  xy: 866, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 18
+Comp 1
+  rotate: false
+  xy: 914, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 19
+Comp 1
+  rotate: false
+  xy: 962, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 20
+Comp 1
+  rotate: false
+  xy: 1010, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 21
+Comp 1
+  rotate: false
+  xy: 1058, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 22
+Comp 1
+  rotate: false
+  xy: 1106, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 23
+Comp 1
+  rotate: false
+  xy: 1154, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 24
+Comp 1
+  rotate: false
+  xy: 1202, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 25
+Comp 1
+  rotate: false
+  xy: 1250, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 26
+Comp 1
+  rotate: false
+  xy: 1298, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 27
+Comp 1
+  rotate: false
+  xy: 1346, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 28
+Comp 1
+  rotate: false
+  xy: 1394, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 29
+Comp 1
+  rotate: false
+  xy: 1442, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 30
+Comp 1
+  rotate: false
+  xy: 1490, 4
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: 31

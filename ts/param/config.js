@@ -20,7 +20,7 @@ function configChecker() {
         while (true) {
             if (state !== targetState) {
                 state = targetState;
-                ship_1.ship.speed = state === "speed" ? 506 : 330;
+                ship_1.ship.speed = state === "speed" ? 495 : 363;
                 if (targetState == "speed" && (0, robotjs_1.getPixelColor)(1018, 442) != "ffffff" || targetState == "tank" && (0, robotjs_1.getPixelColor)(900, 442) != "ffffff") {
                     (0, robotjs_1.keyTap)("c");
                     yield (0, sleep_1.sleep)(5500);

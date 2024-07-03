@@ -116,9 +116,9 @@ function kite(target) {
         ship_1.ship.aim.add(aimOffset);
         const assureAttack = setInterval(() => ship_1.ship.attack(), 3000);
         while (ship_1.ship.aim && ship_1.ship.healthLevel > 30) {
-            if (ship_1.ship.healthLevel < 50)
+            if (ship_1.ship.healthLevel < 40)
                 (0, robotjs_1.keyTap)("q");
-            if (ship_1.ship.healthLevel < 80)
+            if (ship_1.ship.healthLevel < 50)
                 (0, robotjs_1.keyTap)("v");
             if (ship_1.ship.pos.x < 3)
                 xsens = false;

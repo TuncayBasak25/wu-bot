@@ -1,0 +1,230 @@
+
+entrans.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Comp 1_00000
+  rotate: false
+  xy: 0, 0
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00001
+  rotate: false
+  xy: 260, 0
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00002
+  rotate: false
+  xy: 520, 0
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00003
+  rotate: false
+  xy: 780, 0
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00004
+  rotate: false
+  xy: 1040, 0
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00005
+  rotate: false
+  xy: 1300, 0
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00006
+  rotate: false
+  xy: 1560, 0
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00007
+  rotate: false
+  xy: 0, 260
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00008
+  rotate: false
+  xy: 260, 260
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00009
+  rotate: false
+  xy: 520, 260
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00010
+  rotate: false
+  xy: 780, 260
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00011
+  rotate: false
+  xy: 1040, 260
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00012
+  rotate: false
+  xy: 1300, 260
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00013
+  rotate: false
+  xy: 1560, 260
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00014
+  rotate: false
+  xy: 0, 520
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00015
+  rotate: false
+  xy: 260, 520
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00016
+  rotate: false
+  xy: 520, 520
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00017
+  rotate: false
+  xy: 780, 520
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00018
+  rotate: false
+  xy: 1040, 520
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00019
+  rotate: false
+  xy: 1300, 520
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00020
+  rotate: false
+  xy: 1560, 520
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00021
+  rotate: false
+  xy: 0, 780
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00022
+  rotate: false
+  xy: 260, 780
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00023
+  rotate: false
+  xy: 520, 780
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00024
+  rotate: false
+  xy: 780, 780
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00025
+  rotate: false
+  xy: 1040, 780
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00026
+  rotate: false
+  xy: 1300, 780
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00027
+  rotate: false
+  xy: 1560, 780
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00028
+  rotate: false
+  xy: 0, 1040
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00029
+  rotate: false
+  xy: 260, 1040
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00030
+  rotate: false
+  xy: 520, 1040
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Comp 1_00031
+  rotate: false
+  xy: 780, 1040
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1

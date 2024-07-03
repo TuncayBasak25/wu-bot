@@ -118,8 +118,8 @@ export async function kite(target: Alien) {
     const assureAttack = setInterval(() => ship.attack(), 3000);
 
     while (ship.aim && ship.healthLevel > 30) {
-        if (ship.healthLevel < 50) keyTap("q");
-        if (ship.healthLevel < 80) keyTap("v");
+        if (ship.healthLevel < 40) keyTap("q");
+        if (ship.healthLevel < 50) keyTap("v");
 
         if (ship.pos.x < 3) xsens = false;
         else if (ship.pos.x > nav.botRight.x - 3) xsens = true;

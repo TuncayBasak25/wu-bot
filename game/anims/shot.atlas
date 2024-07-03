@@ -1,0 +1,47 @@
+shot.png
+size: 180, 15
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Композиция 1_00000 — копия
+  rotate: false
+  xy: 0, 0
+  size: 30, 15
+  orig: 30, 15
+  offset: 0, 0
+  index: -1
+Композиция 1
+  rotate: false
+  xy: 30, 0
+  size: 30, 15
+  orig: 30, 15
+  offset: 0, 0
+  index: 0
+Композиция 1
+  rotate: false
+  xy: 60, 0
+  size: 30, 15
+  orig: 30, 15
+  offset: 0, 0
+  index: 1
+Композиция 1
+  rotate: false
+  xy: 90, 0
+  size: 30, 15
+  orig: 30, 15
+  offset: 0, 0
+  index: 2
+Композиция 1_00003 — копия
+  rotate: false
+  xy: 120, 0
+  size: 30, 15
+  orig: 30, 15
+  offset: 0, 0
+  index: -1
+Композиция 1
+  rotate: false
+  xy: 150, 0
+  size: 30, 15
+  orig: 30, 15
+  offset: 0, 0
+  index: 3

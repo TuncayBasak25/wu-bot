@@ -1,0 +1,118 @@
+
+shieldhit.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Comp 1_00000
+  rotate: false
+  xy: 0, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00001
+  rotate: false
+  xy: 70, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00002
+  rotate: false
+  xy: 140, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00003
+  rotate: false
+  xy: 210, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00004
+  rotate: false
+  xy: 280, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00005
+  rotate: false
+  xy: 350, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00006
+  rotate: false
+  xy: 420, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00007
+  rotate: false
+  xy: 490, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00008
+  rotate: false
+  xy: 560, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00009
+  rotate: false
+  xy: 630, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00010
+  rotate: false
+  xy: 700, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00011
+  rotate: false
+  xy: 770, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00012
+  rotate: false
+  xy: 840, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00013
+  rotate: false
+  xy: 910, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00014
+  rotate: false
+  xy: 0, 70
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+Comp 1_00015
+  rotate: false
+  xy: 70, 70
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1

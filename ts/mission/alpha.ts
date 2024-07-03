@@ -13,6 +13,8 @@ import { killJumpUntil } from "./stage";
 
 
 export async function alpha() {
+    await buyX2();
+
     await nav.starMission("alpha");
     
     await killJumpUntil("bangoliour");
