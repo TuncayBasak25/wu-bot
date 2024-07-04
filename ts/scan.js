@@ -20,7 +20,7 @@ const mouse_1 = require("./util/mouse");
 const sleep_1 = require("./util/sleep");
 const vector_1 = __importDefault(require("./util/vector"));
 const queryList = [
-    0xFF0000, 25, 1, //Aim
+    0xFF0000, 10, 1, //Aim
     alien_1.AlienHex.hydro, 2, 0,
     alien_1.AlienHex.jenta, 2, 0,
     alien_1.AlienHex.mali, 2, 0,

@@ -99,21 +99,8 @@ exports.attackKite = attackKite;
 function kite(target) {
     return __awaiter(this, void 0, void 0, function* () {
         const kitePos = nav_1.nav.screenCenter.set(545, 0).rotate(-Math.PI / 6).add(nav_1.nav.screenCenter);
-        const aimOffset = new vector_1.default(64, 64);
-        switch (target.name) {
-            case "zavientos":
-                aimOffset.set(95, 90);
-                break;
-            case "magmius":
-                aimOffset.set(95, 90);
-                break;
-            case "xeon":
-                aimOffset.set(95, 90);
-                break;
-        }
         if (!ship_1.ship.aim)
             return false;
-        ship_1.ship.aim.add(aimOffset);
         const assureAttack = setInterval(() => ship_1.ship.attack(), 3000);
         while (ship_1.ship.aim && ship_1.ship.healthLevel > 30) {
             if (ship_1.ship.healthLevel < 40)
@@ -129,7 +116,6 @@ function kite(target) {
             else if (ship_1.ship.pos.y > nav_1.nav.botRight.y - 3)
                 ysens = true;
             const desiredEnemyPosition = new vector_1.default(xsens ? kitePos.x : 1920 - kitePos.x, ysens ? 1080 - kitePos.y : kitePos.y);
-            ship_1.ship.aim.add(aimOffset);
             const delta = desiredEnemyPosition.clone.sub(ship_1.ship.aim).mul(-1);
             const diff = ship_1.ship.aim.pointDistance(desiredEnemyPosition);
             diff > 500 ? (0, config_1.switchConfig)("speed") : (0, config_1.switchConfig)("tank");
