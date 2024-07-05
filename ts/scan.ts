@@ -7,7 +7,7 @@ import { sleep } from "./util/sleep";
 import Vector from "./util/vector";
 
 const queryList = [
-    0xFF0000, 10, 1,//Aim
+    0xFF0000, 25, 1,//Aim
     AlienHex.hydro, 2, 0,
     AlienHex.jenta, 2, 0,
     AlienHex.mali, 2, 0,

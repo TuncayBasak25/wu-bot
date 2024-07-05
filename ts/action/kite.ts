@@ -103,7 +103,17 @@ export async function attackKite(enemyCount: number) {
 export async function kite(target: Alien) {
     const kitePos = nav.screenCenter.set(545, 0).rotate(-Math.PI/6).add(nav.screenCenter);
 
+    const aimOffset = new Vector(64, 64);
+
+    switch (target.name) {
+        case "zavientos": aimOffset.set(95, 90); break;
+        case "magmius": aimOffset.set(95, 90); break;
+        case "xeon": aimOffset.set(95, 90); break;
+    }
+
     if (!ship.aim) return false;
+
+    ship.aim.add(aimOffset);
 
     const assureAttack = setInterval(() => ship.attack(), 3000);
 
@@ -118,6 +128,8 @@ export async function kite(target: Alien) {
 
 
         const desiredEnemyPosition = new Vector(xsens ? kitePos.x : 1920 - kitePos.x, ysens ? 1080 - kitePos.y : kitePos.y);
+
+        ship.aim.add(aimOffset);
 
         const delta = desiredEnemyPosition.clone.sub(ship.aim).mul(-1);
         
