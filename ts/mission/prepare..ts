@@ -8,20 +8,6 @@ import { gamma } from "./gamma";
 
 import { File } from "explorer";
 
-const gatestate = {
-    alpha: 0,
-    beta: 0,
-    gamma: 0,
-
-    alphaDone: 0,
-    gammaDone: 0,
-    betaDone: 0
-}
-//const gateStateFile = new File(process.cwd() + "/gateState");
-
-//gateStateFile.content = JSON.stringify(gatestate);
-
-
 
 async function openGateMenu() {
     keyTap("f6");
@@ -54,74 +40,79 @@ async function setClickCount() {
     await sleep(1000);
 }
 
+async function missionCycle() {
+    await openGateMenu();
 
+    mouse.move(600, 300);
+    await until(() => getPixelColor(760, 300) === "873838" || getPixelColor(760, 300) === "692e2e");
+    mouse.click(600, 300);
+    await until(() => getPixelColor(1000, 400) === "effac3");
 
-let sigorta = 0;
-let platine = 0;
-export async function cycleMissions() {
+    if (getPixelColor(967, 830) == "131a2a") {
+        await alpha();
+        return true;
+    }
+    if (await readyGate()) {
+        await alpha();
+        return true;
+    }
+
+    mouse.click(600, 350);
+    await until(() => getPixelColor(1000, 400) === "effac5");
+
+    if (getPixelColor(967, 830) == "131a2a") {
+        await beta();
+        return true;
+    }
+    if (await readyGate()) {
+        await beta();
+        return true;
+    }
+
+    mouse.click(600, 380);
+    await until(() => getPixelColor(1000, 400) === "effac7");
+
+    if (getPixelColor(967, 830) == "131a2a") {
+        await gamma();
+        return true;
+    }
+    if (await readyGate()) {
+        await gamma();
+        return true;
+    }
+
+    return false;
+}
+
+export async function doMissions() {
+    while (await missionCycle()) await sleep(0);
+}
+
+export async function clickMissions() {
 
     mouse.click(nav.screenCenter);
 
+    await openGateMenu();
+    await setClickCount();
+
     while (true) {
-        if (gatestate.gamma) {
-            await gamma();
+        mouse.move(600, 300);
+        await until(() => getPixelColor(760, 300) === "873838" || getPixelColor(760, 300) === "692e2e");
+        mouse.click(600, 300);
+        await until(() => getPixelColor(1000, 400) === "effac3");
 
-            gatestate.gamma--;
-            gatestate.gammaDone--;
-        }
-        if (gatestate.beta) {
-            await beta();
+        if (getPixelColor(825, 800) === "002d5f") break;
 
-            gatestate.beta--;
-            gatestate.betaDone--;
-        }
-        if (gatestate.alpha) {
-            await alpha();
+        mouse.click(600, 350);
+        await until(() => getPixelColor(1000, 400) === "effac5");
 
-            gatestate.alpha--;
-            gatestate.alphaDone--;
-        }
+        if (getPixelColor(825, 800) === "002d5f") break;
 
-        console.log(`Gamma done ${gatestate.gammaDone}\nBeta done ${gatestate.betaDone}\nAlpha done ${gatestate.alphaDone}`);
-        
-        await openGateMenu();
-        await setClickCount();
-        
-        while (!gatestate.alpha && !gatestate.beta && !gatestate.gamma) {
-            mouse.move(600, 300);
-            await until(() => getPixelColor(760, 300) === "873838" || getPixelColor(760, 300) === "692e2e");
-            mouse.click(600, 300);
-            await until(() => getPixelColor(1000, 400) === "effac3");
+        mouse.click(600, 380);
+        await until(() => getPixelColor(1000, 400) === "effac7");
 
-            if (await readyGate()) {
-                gatestate.alpha++;
-                break;
-            }
+        if (getPixelColor(825, 800) === "002d5f") break;
 
-            mouse.click(600, 350);
-            await until(() => getPixelColor(1000, 400) === "effac5");
-
-            if (await readyGate()) {
-                gatestate.beta++;
-                break;
-            }
-
-            mouse.click(600, 380);
-            await until(() => getPixelColor(1000, 400) === "effac7");
-
-            if (await readyGate()) {
-                gatestate.gamma++;
-                break;
-            }
-
-            //if (sigorta > 50) process.exit();//Si il click plus de 250000;
-
-            sigorta++;
-            mouse.click(1200, 800);
-            platine += 5000;
-
-            
-        }
-        console.log(`Total platine used: ${platine}`);
+        mouse.click(1200, 800);
     }
 }

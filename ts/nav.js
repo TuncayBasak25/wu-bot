@@ -18,6 +18,7 @@ const mouse_1 = require("./util/mouse");
 const ship_1 = require("./ship");
 const sleep_1 = require("./util/sleep");
 const vector_1 = __importDefault(require("./util/vector"));
+const prepare_1 = require("./mission/prepare.");
 class Nav {
     constructor() {
         this.map = "u7";
@@ -78,7 +79,8 @@ class Nav {
             this.map = "u7";
             ship_1.ship.pos.set(this.u7Base);
             this.mapSpeedConstant = 105;
-            yield (0, sleep_1.sleep)(5000);
+            yield (0, prepare_1.clickMissions)();
+            //await sleep(5000);
             (0, robotjs_1.keyTap)("h");
             (0, robotjs_1.keyTap)("j");
             yield (0, sleep_1.sleep)(5000);
