@@ -60,7 +60,7 @@ export function getMousePos(): { x: number, y: number }
 export function getPixelColor(x: number, y: number): string
 export function findColor(color:  number, origin_x: number, origin_y: number, width: number, height: number): {x: number, y: number}
 export function scanColors(origin_x: number, origin_y: number, width: number, height: number, ...colors: number[]): any
-export function pixelScan(left: number, top: number, right: number, bot: number, ...args: number[]): [Point[][], number[]]
+export function pixelScan(left: number, top: number, right: number, bot: number, ...args: number[]): [Point[][], number[], Point]
 export function getScreenSize(): { width: number, height: number }
 
 export var screen: Screen

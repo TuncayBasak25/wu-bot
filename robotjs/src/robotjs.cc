@@ -856,6 +856,8 @@ typedef struct Measure {
 
 NAN_METHOD(pixelScan)
 {
+	Point pos = {0, 0};
+
 	int info_index = 0;
 	int left = Nan::To<int32_t>(info[info_index++]).FromJust();
 	int top = Nan::To<int32_t>(info[info_index++]).FromJust();
@@ -953,6 +955,118 @@ NAN_METHOD(pixelScan)
 		}
 	}
 
+	pixels = (int *)(void *)bitmap->imageBuffer;
+
+
+	bool leftSide = true;
+	std::vector<int> main_sequence;
+
+	for (int x=290; x<=350; x++) {
+		int line = 0;
+		int count = 0;
+		for (int y=807 + top; y<=818 + top; y++) {
+			int pc = *(pixels + y * width + x);
+
+			if (pc == 0xFF48F5F3) {
+				if (line) line <<= 1;
+				else line = 1 << count;
+			}
+			else if (pc == 0xFF34B2B0 && *(pixels + (y - 1) * width + x) == 0xFF154747) line--;
+			count++;
+		}
+
+		if (line) main_sequence.push_back(line);
+	}
+
+	std::vector<int> sequence;
+
+
+	int mid = (int)main_sequence.size() / 2;
+	int i = 0;
+	int temp;
+	while (i < mid) {
+		temp = main_sequence[i];
+		main_sequence[i] = main_sequence[main_sequence.size() - i -1];
+		main_sequence[main_sequence.size() - i - 1] = temp; i++;
+	}
+
+	while (main_sequence.size() > 0) {
+		sequence.push_back(main_sequence[main_sequence.size() - 1]);
+		main_sequence.pop_back();
+
+		int digit = -1;
+
+		switch (sequence.size())
+		{
+		case 1:
+		{
+			if (sequence[0] == 1024)
+				digit = 1;
+			else if (sequence[0] < 0)
+			{
+				leftSide = false;
+
+				sequence.clear();
+			}
+			break;
+		}
+		case 2:
+		{
+			if (sequence[0] == 4 && sequence[1] == 32)
+				digit = 3;
+			else if (sequence[0] == 128 && sequence[1] == 128 && (main_sequence.size() == 0 || main_sequence[0] != 1024))
+				digit = 6;
+			break;
+		}
+		case 3:
+		{
+			if (sequence[0] == 256 && sequence[1] == 2 && sequence[2] == 64)
+				digit = 0;
+			else if (sequence[0] == 128 && sequence[1] == 128 && sequence[2] == 1024)
+				digit = 4;
+			else if (sequence[0] == 32 && sequence[1] == 32 && sequence[2] == 32)
+				digit = 8;
+			else if (sequence[0] == 16 && sequence[1] == 64 && sequence[2] == 32)
+				digit = 9;
+
+			break;
+		}
+		case 4:
+		{
+			if (sequence[0] == 1 && sequence[1] == 1 && sequence[2] == 1 && sequence[3] == 128)
+				digit = 5;
+			break;
+		}
+		case 5:
+		{
+			if (sequence[0] == 8 && sequence[1] == 512 && sequence[2] == 1024 && sequence[3] == 1024 && sequence[4] == 1024)
+				digit = 2;
+			break;
+		}
+		case 6:
+		{
+			if (sequence[0] == 1 && sequence[1] == 1 && sequence[2] == 1 && sequence[3] == 1 && sequence[4] == 2 && sequence[5] == 1)
+				digit = 7;
+			break;
+		}
+		}
+
+		if (digit != -1)
+		{
+			if (leftSide) {
+				pos.x *= 10;
+				pos.x += digit;
+			}
+			else {
+				pos.y *= 10;
+				pos.y += digit;
+			}
+				
+
+			sequence.clear();
+		}
+	}
+
 	destroyMMBitmap(bitmap);
 
 	Local<Array> results = Nan::New<Array>();
@@ -988,6 +1102,11 @@ NAN_METHOD(pixelScan)
 	}
 
 	Nan::Set(results, 1, measure_results);
+
+	Local<Object> point = Nan::New<Object>();
+	Nan::Set(point, Nan::New("x").ToLocalChecked(), Nan::New<Number>(pos.x));
+	Nan::Set(point, Nan::New("y").ToLocalChecked(), Nan::New<Number>(pos.y));
+	Nan::Set(results, 2, point);
 
 	info.GetReturnValue().Set(results);
 }

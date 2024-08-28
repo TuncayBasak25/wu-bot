@@ -1,10 +1,10 @@
-C:\projects\ts-projects\wu-bot\robotjs\src\robotjs.cc;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\src\robotjs.obj
-C:\projects\ts-projects\wu-bot\robotjs\src\deadbeef_rand.c;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\src\deadbeef_rand.obj
-C:\projects\ts-projects\wu-bot\robotjs\src\mouse.c;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\src\mouse.obj
-C:\projects\ts-projects\wu-bot\robotjs\src\keypress.c;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\src\keypress.obj
-C:\projects\ts-projects\wu-bot\robotjs\src\keycode.c;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\src\keycode.obj
-C:\projects\ts-projects\wu-bot\robotjs\src\screen.c;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\src\screen.obj
-C:\projects\ts-projects\wu-bot\robotjs\src\screengrab.c;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\src\screengrab.obj
-C:\projects\ts-projects\wu-bot\robotjs\src\snprintf.c;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\src\snprintf.obj
-C:\projects\ts-projects\wu-bot\robotjs\src\MMBitmap.c;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\src\MMBitmap.obj
-C:\Users\tunca\AppData\Roaming\npm\node_modules\node-gyp\src\win_delay_load_hook.cc;C:\projects\ts-projects\wu-bot\robotjs\build\Release\obj\robotjs\win_delay_load_hook.obj
+C:\workspace\wu-bot\robotjs\src\robotjs.cc;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\src\robotjs.obj
+C:\workspace\wu-bot\robotjs\src\deadbeef_rand.c;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\src\deadbeef_rand.obj
+C:\workspace\wu-bot\robotjs\src\mouse.c;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\src\mouse.obj
+C:\workspace\wu-bot\robotjs\src\keypress.c;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\src\keypress.obj
+C:\workspace\wu-bot\robotjs\src\keycode.c;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\src\keycode.obj
+C:\workspace\wu-bot\robotjs\src\screen.c;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\src\screen.obj
+C:\workspace\wu-bot\robotjs\src\screengrab.c;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\src\screengrab.obj
+C:\workspace\wu-bot\robotjs\src\snprintf.c;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\src\snprintf.obj
+C:\workspace\wu-bot\robotjs\src\MMBitmap.c;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\src\MMBitmap.obj
+C:\Users\Tuncay Basak\AppData\Roaming\npm\node_modules\node-gyp\src\win_delay_load_hook.cc;C:\workspace\wu-bot\robotjs\build\Release\obj\robotjs\win_delay_load_hook.obj

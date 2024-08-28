@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\projects\ts-projects\wu-bot\robotjs\build\Release\robotjs.node</FullPath>
+      <FullPath>C:\workspace\wu-bot\robotjs\build\Release\robotjs.node</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
