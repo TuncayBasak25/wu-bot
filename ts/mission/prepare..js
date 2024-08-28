@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.clickMissions = exports.doMissions = void 0;
+exports.clickMissions = exports.cycleMissionsUntilKratos = void 0;
 const robotjs_1 = require("../../robotjs");
 const nav_1 = require("../nav");
 const mouse_1 = require("../util/mouse");
@@ -17,6 +17,7 @@ const sleep_1 = require("../util/sleep");
 const alpha_1 = require("./alpha");
 const beta_1 = require("./beta");
 const gamma_1 = require("./gamma");
+const kratos_1 = require("./kratos");
 function openGateMenu() {
     return __awaiter(this, void 0, void 0, function* () {
         (0, robotjs_1.keyTap)("f6");
@@ -45,51 +46,90 @@ function setClickCount() {
         yield (0, sleep_1.sleep)(1000);
     });
 }
-function missionCycle() {
+function cycleMissionsUntilKratos() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield openGateMenu();
-        mouse_1.mouse.move(600, 300);
-        yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(760, 300) === "873838" || (0, robotjs_1.getPixelColor)(760, 300) === "692e2e");
-        mouse_1.mouse.click(600, 300);
-        yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac3");
-        if ((0, robotjs_1.getPixelColor)(967, 830) == "131a2a") {
-            yield (0, alpha_1.alpha)();
-            return true;
+        while (true) {
+            yield openGateMenu();
+            mouse_1.mouse.move(600, 300);
+            yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(760, 300) === "873838" || (0, robotjs_1.getPixelColor)(760, 300) === "692e2e");
+            mouse_1.mouse.click(600, 300);
+            yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac3");
+            let alphaReady = 0;
+            let alphaReadible = 0;
+            let betaReady = 0;
+            let betaReadible = 0;
+            let gammaReady = 0;
+            let gammaReadible = 0;
+            let kratosReady = 0;
+            let kratosReadible = 0;
+            if ((0, robotjs_1.getPixelColor)(967, 831) == "48f5f3")
+                alphaReady++;
+            if ((0, robotjs_1.getPixelColor)(825, 800) === "002d5f")
+                alphaReadible++;
+            mouse_1.mouse.click(600, 350);
+            yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac5");
+            if ((0, robotjs_1.getPixelColor)(967, 831) == "48f5f3")
+                betaReady++;
+            if ((0, robotjs_1.getPixelColor)(825, 800) === "002d5f")
+                betaReadible++;
+            mouse_1.mouse.click(600, 380);
+            yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac7");
+            if ((0, robotjs_1.getPixelColor)(967, 831) == "48f5f3")
+                gammaReady++;
+            if ((0, robotjs_1.getPixelColor)(825, 800) === "002d5f")
+                gammaReadible++;
+            mouse_1.mouse.click(600, 410);
+            yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac9");
+            if ((0, robotjs_1.getPixelColor)(967, 831) == "48f5f3")
+                kratosReady++;
+            if ((0, robotjs_1.getPixelColor)(825, 800) === "002d5f")
+                kratosReadible++;
+            (0, robotjs_1.keyTap)("escape");
+            yield (0, sleep_1.sleep)(1000);
+            if (alphaReady)
+                yield (0, alpha_1.alpha)();
+            if (alphaReadible) {
+                yield openGateMenu();
+                yield readyGate();
+                yield (0, alpha_1.alpha)();
+            }
+            if (betaReady)
+                yield (0, beta_1.beta)();
+            if (betaReadible) {
+                yield openGateMenu();
+                mouse_1.mouse.click(600, 350);
+                yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac5");
+                yield readyGate();
+                yield (0, beta_1.beta)();
+            }
+            if (gammaReady)
+                yield (0, gamma_1.gamma)();
+            if (gammaReadible) {
+                yield openGateMenu();
+                mouse_1.mouse.click(600, 380);
+                yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac7");
+                yield readyGate();
+                yield (0, gamma_1.gamma)();
+            }
+            if (kratosReady && kratosReadible)
+                yield (0, kratos_1.kratos)();
         }
-        if (yield readyGate()) {
-            yield (0, alpha_1.alpha)();
-            return true;
-        }
-        mouse_1.mouse.click(600, 350);
-        yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac5");
-        if ((0, robotjs_1.getPixelColor)(967, 830) == "131a2a") {
-            yield (0, beta_1.beta)();
-            return true;
-        }
-        if (yield readyGate()) {
-            yield (0, beta_1.beta)();
-            return true;
-        }
-        mouse_1.mouse.click(600, 380);
-        yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac7");
-        if ((0, robotjs_1.getPixelColor)(967, 830) == "131a2a") {
-            yield (0, gamma_1.gamma)();
-            return true;
-        }
-        if (yield readyGate()) {
-            yield (0, gamma_1.gamma)();
-            return true;
+    });
+}
+exports.cycleMissionsUntilKratos = cycleMissionsUntilKratos;
+function handleReadyGate() {
+    return __awaiter(this, void 0, void 0, function* () {
+        if ((0, robotjs_1.getPixelColor)(825, 800) === "002d5f") {
+            if ((0, robotjs_1.getPixelColor)(967, 831) == "48f5f3")
+                return true;
+            mouse_1.mouse.click(825, 800);
+            yield (0, sleep_1.sleep)(1000);
+            (0, robotjs_1.keyTap)("escape");
+            yield (0, sleep_1.sleep)(1000);
         }
         return false;
     });
 }
-function doMissions() {
-    return __awaiter(this, void 0, void 0, function* () {
-        while (yield missionCycle())
-            yield (0, sleep_1.sleep)(0);
-    });
-}
-exports.doMissions = doMissions;
 function clickMissions() {
     return __awaiter(this, void 0, void 0, function* () {
         mouse_1.mouse.click(nav_1.nav.screenCenter);
@@ -100,18 +140,24 @@ function clickMissions() {
             yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(760, 300) === "873838" || (0, robotjs_1.getPixelColor)(760, 300) === "692e2e");
             mouse_1.mouse.click(600, 300);
             yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac3");
-            if ((0, robotjs_1.getPixelColor)(825, 800) === "002d5f")
+            if (yield handleReadyGate())
                 break;
             mouse_1.mouse.click(600, 350);
             yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac5");
-            if ((0, robotjs_1.getPixelColor)(825, 800) === "002d5f")
+            if (yield handleReadyGate())
                 break;
             mouse_1.mouse.click(600, 380);
             yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac7");
-            if ((0, robotjs_1.getPixelColor)(825, 800) === "002d5f")
+            if (yield handleReadyGate())
+                break;
+            mouse_1.mouse.click(600, 410);
+            yield (0, sleep_1.until)(() => (0, robotjs_1.getPixelColor)(1000, 400) === "effac9");
+            if (yield handleReadyGate())
                 break;
             mouse_1.mouse.click(1200, 800);
         }
+        (0, robotjs_1.keyTap)("escape");
+        yield (0, sleep_1.sleep)(1000);
     });
 }
 exports.clickMissions = clickMissions;

@@ -20,10 +20,10 @@ const prepare_1 = require("./mission/prepare.");
 preventTWPopup();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        // await showMouse()
+        //await showMouse()
         yield nav_1.nav.calibrate(nav_1.nav.u7Base);
-        yield (0, prepare_1.doMissions)();
-        process.exit();
+        // await kratos()
+        yield (0, prepare_1.cycleMissionsUntilKratos)();
     });
 }
 main();

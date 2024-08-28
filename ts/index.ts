@@ -16,7 +16,7 @@ import { gamma } from "./mission/gamma";
 import { kratos } from "./mission/kratos";
 import { buyX2, prepareAlpha, prepareBeta } from "./menu/starmission";
 import { killJumpUntil } from "./mission/stage";
-import { doMissions } from "./mission/prepare.";
+import { cycleMissionsUntilKratos } from "./mission/prepare.";
 
 
 startScan();
@@ -24,15 +24,13 @@ preventTWPopup();
 
 async function main()
 {
-    // await showMouse()
-    
+    //await showMouse()
 
     await nav.calibrate(nav.u7Base);
 
-    await doMissions();
+    // await kratos()
 
-
-    process.exit()
+    await cycleMissionsUntilKratos();
 }
 main();
 
