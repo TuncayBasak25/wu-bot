@@ -125,7 +125,7 @@ function test() {
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         //await test();
-        //await showMouse()
+        yield showMouse();
         //await nav.calibrate(nav.u7Base);
         // await kratos()
         //await cycleMissionsUntilKratos();

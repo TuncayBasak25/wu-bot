@@ -56,7 +56,7 @@ function startScan(cooldown = 0) {
     return __awaiter(this, void 0, void 0, function* () {
         const response = (0, robotjs_1.pixelScan)(0, 0, 1920, 1000, queryList.length / 3, ...queryList, measureList.length / 5, ...measureList);
         const newShipPos = new vector_1.default(response[2].x, response[2].y);
-        console.log(newShipPos);
+        // console.log(newShipPos);
         ship_1.ship.tw = response[0][14].length > 0;
         if (!ship_1.ship.tw && (response[1][0] || response[1][1] || response[1][2] || response[1][3])) {
             ship_1.ship.aim = response[0][0][0] && new vector_1.default(response[0][0][0].x, response[0][0][0].y);

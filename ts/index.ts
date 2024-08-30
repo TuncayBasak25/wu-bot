@@ -123,7 +123,7 @@ async function test() {
 async function main()
 {
     //await test();
-    //await showMouse()
+    await showMouse()
 
     //await nav.calibrate(nav.u7Base);
 

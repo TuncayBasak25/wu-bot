@@ -48,7 +48,7 @@ export async function startScan(cooldown: number = 0) {
 
     const newShipPos = new Vector(response[2].x, response[2].y);
 
-    console.log(newShipPos);
+    // console.log(newShipPos);
     
 
     ship.tw = response[0][14].length > 0;
