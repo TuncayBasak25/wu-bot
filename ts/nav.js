@@ -24,6 +24,12 @@ class Nav {
         this.map = "u7";
         this.mapSpeedConstant = 105;
         this.moving = false;
+        this.counters = {
+            alpha: 0,
+            beta: 0,
+            gamma: 0,
+            kratos: 0
+        };
         this.target = new vector_1.default(12, 12);
     }
     starMission(starMission) {
@@ -76,6 +82,8 @@ class Nav {
     endGate() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.goto(this.portals.endGate);
+            this.counters[this.map]++;
+            console.log(`${this.map} completed for ${this.counters[this.map]} times!`);
             this.map = "u7";
             ship_1.ship.pos.set(this.u7Base);
             this.mapSpeedConstant = 105;

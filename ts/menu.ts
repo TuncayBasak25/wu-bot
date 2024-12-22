@@ -56,12 +56,12 @@ class gate {
 	static kratos = new gate("effac9", new Vector(600, 410), kratos);
 
 	static async open() {
+		await menu.open();
 		await waitColor(950, 350, "effada", () => keyTap("f6"));
 	}
 
 	static async setClickCount(count: 1 | 2 | 5 | 10 | 50 | 100 | 250) {
 		const index = [1, 2, 5, 10, 50, 100, 250].indexOf(count);
-		console.log(index);
 		if (index == -1)
 			throw Error(`Idk how you pass a ${count} to a function that accepts only: 1 | 2 | 5 | 10 | 50 | 100 | 250`);
 		await this.open();
@@ -80,7 +80,7 @@ class gate {
 	static async clickGates() {
 		mouse.click(nav.screenCenter);
 
-		this.setClickCount(10);
+		await this.setClickCount(10);
 		while (true) {
 			if (await this.alpha.isDouble())
 				break;
@@ -152,6 +152,10 @@ class gate {
 
 export class menu {
 	static gate = gate;
+
+	static async open() {
+		await waitColor(450, 260, "d4af37", () => keyTap("f1"));
+	}
 
 	static async close() {
 		await waitColorNot(450, 260, "d4af37", () => keyTap("escape"));

@@ -69,13 +69,13 @@ function clickConfirm(x, y) {
 class gate {
     static open() {
         return __awaiter(this, void 0, void 0, function* () {
+            yield menu.open();
             yield waitColor(950, 350, "effada", () => (0, robotjs_1.keyTap)("f6"));
         });
     }
     static setClickCount(count) {
         return __awaiter(this, void 0, void 0, function* () {
             const index = [1, 2, 5, 10, 50, 100, 250].indexOf(count);
-            console.log(index);
             if (index == -1)
                 throw Error(`Idk how you pass a ${count} to a function that accepts only: 1 | 2 | 5 | 10 | 50 | 100 | 250`);
             yield this.open();
@@ -94,7 +94,7 @@ class gate {
     static clickGates() {
         return __awaiter(this, void 0, void 0, function* () {
             mouse_1.mouse.click(nav_1.nav.screenCenter);
-            this.setClickCount(10);
+            yield this.setClickCount(10);
             while (true) {
                 if (yield this.alpha.isDouble())
                     break;
@@ -157,7 +157,6 @@ class gate {
     isReady() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.open();
-            console.log((0, robotjs_1.getPixelColor)(967, 831) == "48f5f3");
             return (0, robotjs_1.getPixelColor)(967, 831) == "48f5f3";
         });
     }
@@ -179,6 +178,11 @@ gate.beta = new gate("effac5", new vector_1.default(600, 350), beta_1.beta);
 gate.gamma = new gate("effac7", new vector_1.default(600, 380), gamma_1.gamma);
 gate.kratos = new gate("effac9", new vector_1.default(600, 410), kratos_1.kratos);
 class menu {
+    static open() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield waitColor(450, 260, "d4af37", () => (0, robotjs_1.keyTap)("f1"));
+        });
+    }
     static close() {
         return __awaiter(this, void 0, void 0, function* () {
             yield waitColorNot(450, 260, "d4af37", () => (0, robotjs_1.keyTap)("escape"));

@@ -66,9 +66,17 @@ class Nav {
         await sleep(5000);
     }
 
+    private counters: {[key in StarMission]: number} = {
+        alpha: 0,
+        beta: 0,
+        gamma: 0,
+        kratos: 0
+    }
     async endGate() {
         await this.goto(this.portals.endGate);
-
+        this.counters[this.map as StarMission]++;
+        console.log(`${this.map} completed for ${this.counters[this.map as StarMission]} times!`);
+        
         this.map = "u7";
         ship.pos.set(this.u7Base);
         this.mapSpeedConstant = 105;

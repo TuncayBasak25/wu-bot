@@ -42,7 +42,7 @@ export async function attack() {
         ship.x2();
         ship.nc();
         if (nav.map === "beta" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {
-            ship.x3();
+            ship.x4();
             ship.tnc();
         }
         if (nav.map === "gamma" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {

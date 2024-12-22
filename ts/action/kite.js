@@ -76,7 +76,7 @@ function attackKite(enemyCount) {
             ship_1.ship.x2();
             ship_1.ship.nc();
             if (nav_1.nav.map === "beta" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {
-                ship_1.ship.x3();
+                ship_1.ship.x4();
                 ship_1.ship.tnc();
             }
             if (nav_1.nav.map === "gamma" && (target.name === "zavientos" || target.name === "magmius" || target.name === "bangoliour" || target.name === "vortex")) {
