@@ -2,7 +2,6 @@ import { keyTap } from "../../robotjs";
 import { attackKite } from "../action/kite";
 import { repair } from "../action/repair";
 import { Alien } from "../alien";
-import { buyX2 } from "../menu/starmission";
 import { nav } from "../nav";
 import { switchConfig } from "../param/config";
 import { ship } from "../ship";

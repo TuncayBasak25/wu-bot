@@ -15,15 +15,13 @@ const ship_1 = require("./ship");
 const sleep_1 = require("./util/sleep");
 const nav_1 = require("./nav");
 const scan_1 = require("./scan");
-const prepare_1 = require("./mission/prepare.");
+const menu_1 = require("./menu");
 (0, scan_1.startScan)();
 preventTWPopup();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        //await showMouse()
-        yield nav_1.nav.calibrate(nav_1.nav.u7Base);
-        // await kratos()
-        yield (0, prepare_1.cycleMissionsUntilKratos)();
+        mouse_1.mouse.click(nav_1.nav.screenCenter);
+        yield menu_1.menu.gate.loopUntilKratos();
     });
 }
 main();

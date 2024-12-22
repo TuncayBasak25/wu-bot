@@ -1,6 +1,5 @@
 import { getPixelColor, pixelScan } from "../robotjs";
 import { Alien, AlienHex } from "./alien";
-import { actualConfig } from "./param/config";
 import { ship } from "./ship";
 import { mouse } from "./util/mouse";
 import { sleep } from "./util/sleep";

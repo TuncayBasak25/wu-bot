@@ -3,7 +3,6 @@ import { attack } from "../action/attack";
 import { attackKite } from "../action/kite";
 import { repair } from "../action/repair";
 import { Alien, AlienName } from "../alien";
-import { buyX2 } from "../menu/starmission";
 import { nav } from "../nav";
 import { switchConfig } from "../param/config";
 import { hud, outsideHud } from "../param/hud";

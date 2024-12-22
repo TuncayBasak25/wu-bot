@@ -3,7 +3,7 @@ import { mouse } from "./util/mouse";
 import { ship } from "./ship";
 import { sleep, until, when } from "./util/sleep";
 import Vector, { Point } from "./util/vector";
-import { clickMissions } from "./mission/prepare.";
+import { menu } from "./menu";
 
 type StarMission = "alpha" | "beta" | "gamma" | "kratos";
 
@@ -73,7 +73,7 @@ class Nav {
         ship.pos.set(this.u7Base);
         this.mapSpeedConstant = 105;
 
-        await clickMissions();
+        await menu.gate.clickGates();
         //await sleep(5000);
         keyTap("h");
         

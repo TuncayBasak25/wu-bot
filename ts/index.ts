@@ -1,5 +1,4 @@
 import robot, { getMousePos, getPixelColor, findColor as getPx, keyTap, mouseClick, getMousePos as mousePos, moveMouse } from "../robotjs";
-import { Alien, AlienHex, Promotion } from "./alien";
 import { hud } from "./param/hud";
 import { mouse } from "./util/mouse";
 import { ship } from "./ship";
@@ -7,16 +6,8 @@ import { sleep, until, when } from "./util/sleep";
 import Vector from "./util/vector";
 import { nav } from "./nav";
 import { startScan } from "./scan";
-import { switchConfig } from "./param/config";
-import { alpha } from "./mission/alpha";
-import { attackKite } from "./action/kite";
-import { attack } from "./action/attack";
-import { beta } from "./mission/beta";
-import { gamma } from "./mission/gamma";
-import { kratos } from "./mission/kratos";
-import { buyX2, prepareAlpha, prepareBeta } from "./menu/starmission";
-import { killJumpUntil } from "./mission/stage";
-import { cycleMissionsUntilKratos } from "./mission/prepare.";
+
+import { menu } from "./menu";
 
 
 startScan();
@@ -24,13 +15,8 @@ preventTWPopup();
 
 async function main()
 {
-    //await showMouse()
-
-    await nav.calibrate(nav.u7Base);
-
-    // await kratos()
-
-    await cycleMissionsUntilKratos();
+    mouse.click(nav.screenCenter);
+    await menu.gate.loopUntilKratos();
 }
 main();
 
