@@ -73,6 +73,11 @@ class gate {
             yield waitColor(950, 350, "effada", () => (0, robotjs_1.keyTap)("f6"));
         });
     }
+    static isOpen() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield waitColor(950, 350, "effada", () => { });
+        });
+    }
     static setClickCount(count) {
         return __awaiter(this, void 0, void 0, function* () {
             const index = [1, 2, 5, 10, 50, 100, 250].indexOf(count);
@@ -89,6 +94,7 @@ class gate {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.open();
             mouse_1.mouse.click(1200, 800);
+            yield this.isOpen();
         });
     }
     static clickGates() {
@@ -146,11 +152,13 @@ class gate {
     }
     prepare() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (yield this.isReady())
+            const readible = yield this.isReadible();
+            if ((yield this.isReady()) && readible)
                 return true;
-            if (!(yield this.isReadible()))
+            if (!readible)
                 return false;
             yield clickConfirm(1000, 800);
+            yield waitColor(1000, 400, this.color, () => { });
             return true;
         });
     }
@@ -169,7 +177,7 @@ class gate {
     isDouble() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.open();
-            return ((yield this.isReady()) && (yield this.isReadible()));
+            return ((yield this.isReady()) && (yield this.prepare()));
         });
     }
 }

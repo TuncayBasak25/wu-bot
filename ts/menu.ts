@@ -60,6 +60,10 @@ class gate {
 		await waitColor(950, 350, "effada", () => keyTap("f6"));
 	}
 
+	static async isOpen() {
+		await waitColor(950, 350, "effada", () => {});
+	}
+
 	static async setClickCount(count: 1 | 2 | 5 | 10 | 50 | 100 | 250) {
 		const index = [1, 2, 5, 10, 50, 100, 250].indexOf(count);
 		if (index == -1)
@@ -75,6 +79,7 @@ class gate {
 	static async click() {
 		await this.open();
 		mouse.click(1200, 800);
+		await this.isOpen();
 	}
 
 	static async clickGates() {
@@ -125,11 +130,13 @@ class gate {
 	}
 
 	async prepare() {
-		if (await this.isReady())
+		const readible = await this.isReadible();
+		if (await this.isReady() && readible)
 			return true;
-		if (!await this.isReadible())
+		if (!readible)
 			return false;
 		await clickConfirm(1000, 800);
+		await waitColor(1000, 400, this.color, () => {})
 		return true;
 	}
 
@@ -146,7 +153,7 @@ class gate {
 
 	async isDouble() {
 		await this.open();
-		return (await this.isReady() && await this.isReadible());
+		return (await this.isReady() && await this.prepare());
 	}
 }
 
